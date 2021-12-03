@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>BankApp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+    
+      <form #form="ngForm" (ngSubmit)="onSubmit( form )" (keydown)="keyDownFunction( $event, form )">
+
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input type="email"
+                     placeholder="example@example.com"
+                     name="email"
+                     [(ngModel)]="user.email"
+                     pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                     required></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>Password:</ion-label>
+          <ion-input type="password"
+                     placeholder="****"
+                     name="password"
+                     [(ngModel)]="user.password"
+                     required></ion-input>
+        </ion-item>
+
+        <ion-button [disabled]="form.invalid" type="submit" expand="block">
+          Login
+        </ion-button>
+     </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

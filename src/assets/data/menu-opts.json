@@ -1,0 +1,32 @@
+[
+    {
+        "icon": "list-outline",
+        "name": "Account Status",
+        "redirectTo": "/account-status",
+        "permission": false
+    },
+    {
+        "icon": "swap-horizontal-outline",
+        "name": "Transfer",
+        "redirectTo": "/transfer",
+        "permission": false
+    },
+    {
+        "icon": "time-outline",
+        "name": "History",
+        "redirectTo": "/history",
+        "permission": false
+    },
+    {
+        "icon": "people-outline",
+        "name": "Manage users",
+        "redirectTo": "/manage-users",
+        "permission": true
+    },
+    {
+        "icon": "settings-outline",
+        "name": "Settings",
+        "redirectTo": "/settings",
+        "permission": false
+    }
+]

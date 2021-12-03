@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
+import { User } from '../interfaces/interfaces';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  constructor( private storage: Storage) {
+    this.startStorage();
+  }
+
+  async startStorage() {
+    await this.storage.create();
+  }
+
+  async setCurrentUser( user: User ) {
+    await this.storage.set('currentUser', user);
+  }
+
+  async getCurrentUser() {
+    return await this.storage.get('currentUser');
+  }
+
+  async logOut() {
+    await this.storage.remove('currentUser');
+  }
+}

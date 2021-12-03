@@ -1,0 +1,65 @@
+<app-header title="Transfer"></app-header>
+
+<ion-content class="ion-padding">
+    <ion-card>
+
+        <ion-card-header>
+          <ion-card-title>Transfer</ion-card-title>
+        </ion-card-header>
+    
+        <ion-card-content>
+        
+          <form #form="ngForm" (ngSubmit)="onSubmit( form )" (keydown)="keyDownFunction( $event, form )">
+            <ion-item>
+                <ion-label>Debit account:</ion-label>
+                <ion-select placeholder="Select account"
+                            interface="popover"
+                            class="customSelect"
+                            mode="ios"
+                            (ionChange)="changeDebitAccount( $event )">
+                    <ion-select-option *ngFor="let account of userAccounts"
+                                        value="{{ account.accountId }}">
+                        {{ account.accountId }}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Credit account:</ion-label>
+              <ion-select placeholder="Select account"
+                          interface="popover"
+                          class="customSelect"
+                          mode="ios"
+                          (ionChange)="changeCreditAccount( $event )">
+                  <ion-select-option *ngFor="let account of userAccounts"
+                                      value="{{ account.accountId }}">
+                      {{ account.accountId }}
+                  </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Amount:</ion-label>
+              <ion-input type="number"
+                         placeholder="0.0"
+                         slot="end"
+                         name="amount"
+                         [(ngModel)]="transfer.amount"
+                         required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Message:</ion-label>
+              <ion-textarea slot="end"
+                            placeholder="..."
+                            name="message"
+                            [(ngModel)]="message"></ion-textarea>
+            </ion-item>
+    
+            <ion-button [disabled]="form.invalid" type="submit" expand="block">
+              Transfer
+            </ion-button>
+         </form>
+        </ion-card-content>
+      </ion-card>
+</ion-content>

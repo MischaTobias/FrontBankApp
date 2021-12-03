@@ -1,3 +1,26 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="first" contentId="main">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Bank App</ion-title>
+        <ion-label *ngIf="currentUser">
+          {{ currentUser.email }}
+        </ion-label>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle *ngFor="let c of componentes | async">
+          <ion-item *ngIf="isAdmin && c.permission || !c.permission"
+                    [routerLink]="c.redirectTo"
+                    detail>
+          <ion-icon slot="start" [name]="c.icon" color="primary"></ion-icon>
+          {{ c.name }}
+        </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>  
+
+  <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
