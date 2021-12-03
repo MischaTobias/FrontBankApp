@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
+import { InfoBancoService } from '../../services/info-banco.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginPage implements OnInit {
 
   constructor( private router: Router,
                private userService: UserService,
+               private infoService: InfoBancoService,
                private toastCtrl: ToastController ) { }
 
   ngOnInit() {
@@ -26,12 +28,20 @@ export class LoginPage implements OnInit {
       this.presentToast('Invalid Information', 'danger');
       return;
     }
-
-    if (this.user) {
-      this.userService.setCurrentUser( this.user );
-      this.presentToast('Succesful Login', 'success');
-      this.router.navigate(['/account-status']);
-    }
+    
+    this.infoService.getCheckLogin(this.user.email).subscribe(resp => {
+      //null?
+      if (resp.length === 0) {
+        this.presentToast('Invalid email', 'danger');
+      }
+      else if (resp[0].password === this.user.password) {
+        this.userService.setCurrentUser( this.user );
+        this.presentToast('Succesful Login', 'success');
+        this.router.navigate(['/account-status']);
+      }else{
+        this.presentToast('Invalid password', 'danger');
+      }
+    });
   }
 
   keyDownFunction( event, form ) {
