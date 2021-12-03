@@ -13,26 +13,26 @@ import { UserService } from '../../services/user.service';
 export class TransferPage implements OnInit {
 
   userAccounts: Account[] = [
-    {
-      accountId: 1,
-      currentBalance: 100
-    },
-    {
-      accountId: 2,
-      currentBalance: 200
-    },
-    {
-      accountId: 3,
-      currentBalance: 300
-    },
-    {
-      accountId: 4,
-      currentBalance: 400
-    },
-    {
-      accountId: 5,
-      currentBalance: 500
-    },
+    // {
+    //   accountId: 1,
+    //   currentBalance: 100
+    // },
+    // {
+    //   accountId: 2,
+    //   currentBalance: 200
+    // },
+    // {
+    //   accountId: 3,
+    //   currentBalance: 300
+    // },
+    // {
+    //   accountId: 4,
+    //   currentBalance: 400
+    // },
+    // {
+    //   accountId: 5,
+    //   currentBalance: 500
+    // },
   ];
 
   transfer: Transfer = new Transfer();

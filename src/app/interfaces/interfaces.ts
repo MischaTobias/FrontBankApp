@@ -5,6 +5,13 @@ export interface Componente {
     permission: boolean;
 }
 
+export interface Account {
+  idCuenta: number;
+  TipoCuenta?: string;
+  MontoActual?: number;
+  Propietario?: number;
+}
+
 export class User {
     userId: number;
     email?: string;
@@ -18,12 +25,12 @@ export class User {
     phone: string;
 }
 
-export interface Account {
-    accountId: number;
-    type?: boolean;
-    owner?: number;
-    currentBalance?: number;
-}
+// export interface Account {
+//     idCuenta: number;
+//     type?: boolean;
+//     owner?: number;
+//     currentBalance?: number;
+// }
 
 export interface Relationships {
     relationshipId: number;

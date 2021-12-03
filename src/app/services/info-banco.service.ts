@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Account } from '../interfaces/interfaces';
 
 const URL = environment.url;
 const VERSION = environment.version;
@@ -30,6 +31,11 @@ export class InfoBancoService {
   getCheckLogin(email: string){
     const query = `/usuario/${email}`;
     return this.queryGet<any>(query);
+  }
+
+  getAccountStatus(email: string){
+    const query = `/cuenta/${email}`;
+    return this.queryGet<Account>(query);
   }
 
 
