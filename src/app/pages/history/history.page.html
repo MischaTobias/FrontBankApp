@@ -2,11 +2,13 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let trans of transfers">
+        <ion-item *ngFor="let trans of transfers[0]">
             <ion-card>
                 <ion-card-header>
-                    <ion-card-subtitle>Amount: {{ trans.amount }}</ion-card-subtitle>
-                    <ion-card-title color="primary">{{ trans.debitAccount }}</ion-card-title>
+                    <ion-card-subtitle> <b>Date:</b> {{trans.FechaYHora}}.</ion-card-subtitle>
+                    <ion-card-title color="primary">Amount: Q{{ trans.Monto }}</ion-card-title>
+                    <b>{{ trans.NombreAccion }}</b>
+                    <p> <b>Origin:</b> {{trans.CuentaOrigen}}. <b>Destination:</b> {{trans.CuentaDestino}}.</p>
                 </ion-card-header>
             </ion-card>
         </ion-item>

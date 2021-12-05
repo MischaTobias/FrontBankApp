@@ -5,6 +5,14 @@ export interface Componente {
     permission: boolean;
 }
 
+export interface HistoryNormal {
+  FechaYHora: string;
+  Monto: number;
+  CuentaOrigen: number;
+  CuentaDestino: number;
+  NombreAccion: string;
+}
+
 export interface Account {
   idCuenta: number;
   TipoCuenta?: string;

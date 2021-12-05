@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
+import { InfoBancoService } from '../../services/info-banco.service';
+import { HistoryNormal } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-history',
@@ -11,112 +13,21 @@ import { UserService } from '../../services/user.service';
 })
 export class HistoryPage implements OnInit {
 
-  transfers: Transfer[] = [
-    {
-      transferId: 1,
-      amount: 100,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 2,
-      amount: 200,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 3,
-      amount: 300,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 4,
-      amount: 400,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-    {
-      transferId: 5,
-      amount: 500,
-      debitAccount: -1,
-      creditAccount: -2,
-      action: 0
-    },
-  ];
+  transfers: HistoryNormal[] = [];
 
   constructor( private userService: UserService,
                private router: Router,
+               private infoService: InfoBancoService,
                private toastCtrl: ToastController ) { }
 
   ngOnInit() {
+    this.userService.getCurrentUser().then((user: User) => {
+      if (user) {
+        this.infoService.getHistoryNormal(user.email).subscribe(resp => {
+          this.transfers.push(resp);
+        });
+      }
+    });
   }
 
   ionViewWillEnter() {

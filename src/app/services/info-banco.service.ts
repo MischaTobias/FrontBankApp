@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account } from '../interfaces/interfaces';
+import { Account, HistoryNormal } from '../interfaces/interfaces';
 
 const URL = environment.url;
 const VERSION = environment.version;
@@ -12,6 +12,8 @@ const VERSION = environment.version;
 export class InfoBancoService {
 
   constructor(private http: HttpClient) { }
+
+    //METODOS GENERICOS
 
   private queryGet<T>(query: string){
     query = URL + VERSION + query;
@@ -28,6 +30,8 @@ export class InfoBancoService {
     return this.http.put<T>(query,body);
   }
 
+  //METODOS GET
+
   getCheckLogin(email: string){
     const query = `/usuario/${email}`;
     return this.queryGet<any>(query);
@@ -37,6 +41,21 @@ export class InfoBancoService {
     const query = `/cuenta/${email}`;
     return this.queryGet<Account>(query);
   }
+
+  getHistoryAdmin(){
+    const query = `/historial`;
+    return this.queryGet<Account>(query);
+  }
+
+  getHistoryNormal(email: string){
+    const query = `/historial/${email}`;
+    return this.queryGet<HistoryNormal>(query);
+  }
+
+    //METODOS POST
+
+
+    //METODOS PUT
 
 
 }
