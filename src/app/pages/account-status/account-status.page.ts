@@ -13,28 +13,7 @@ import { InfoBancoService } from '../../services/info-banco.service';
 })
 export class AccountStatusPage implements OnInit {
 
-  userAccounts: Account[] = [
-    // {
-    //   accountId: 1,
-    //   currentBalance: 100
-    // },
-    // {
-    //   accountId: 2,
-    //   currentBalance: 200
-    // },
-    // {
-    //   accountId: 3,
-    //   currentBalance: 300
-    // },
-    // {
-    //   accountId: 4,
-    //   currentBalance: 400
-    // },
-    // {
-    //   accountId: 5,
-    //   currentBalance: 500
-    // },
-  ];
+  userAccounts: Account[] = [];
 
   constructor( private userService: UserService,
                private router: Router,
@@ -44,7 +23,7 @@ export class AccountStatusPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        this.infoService.getAccountStatus(user.email).subscribe(resp => {
+        this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
           this.userAccounts.push(resp);
         });
       }

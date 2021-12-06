@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Account, HistoryNormal } from '../interfaces/interfaces';
+import { User } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
 const VERSION = environment.version;
@@ -50,6 +51,11 @@ export class InfoBancoService {
   getHistoryNormal(email: string){
     const query = `/historial/${email}`;
     return this.queryGet<HistoryNormal>(query);
+  }
+
+  getUserInfo(email: string){
+    const query = `/usuarioInfo/${email}`;
+    return this.queryGet<User>(query);
   }
 
     //METODOS POST

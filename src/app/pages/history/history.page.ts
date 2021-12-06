@@ -23,7 +23,7 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        this.infoService.getHistoryNormal(user.email).subscribe(resp => {
+        this.infoService.getHistoryNormal(user.Correo).subscribe(resp => {
           this.transfers.push(resp);
         });
       }

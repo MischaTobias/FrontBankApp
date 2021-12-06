@@ -21,17 +21,30 @@ export interface Account {
 }
 
 export class User {
-    userId: number;
-    email?: string;
-    password?: string;
-    role: boolean;
-    available: boolean;
-    address: string;
-    dpi: string;
-    birthDate: Date;
-    name: string;
-    phone: string;
+  idUsuario?: number;
+  Correo?: string;
+  Contrasena?: string;
+  Rol?: string;
+  Disponible?: number;
+  Direccion?: string;
+  DPI?: string;
+  FechaNacimiento?: string;
+  Nombre?: string;
+  Telefono?: string;
 }
+
+// export class User {
+//     userId: number;
+//     email?: string;
+//     password?: string;
+//     role: boolean;
+//     available: boolean;
+//     address: string;
+//     dpi: string;
+//     birthDate: Date;
+//     name: string;
+//     phone: string;
+// }
 
 // export interface Account {
 //     idCuenta: number;

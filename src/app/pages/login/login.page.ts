@@ -28,13 +28,14 @@ export class LoginPage implements OnInit {
       this.presentToast('Invalid Information', 'danger');
       return;
     }
-    
-    this.infoService.getCheckLogin(this.user.email).subscribe(resp => {
+
+    this.infoService.getCheckLogin(this.user.Correo).subscribe(resp => {
       //null?
       if (resp.length === 0) {
         this.presentToast('Invalid email', 'danger');
       }
-      else if (resp[0].password === this.user.password) {
+      else if (resp[0].password === this.user.Contrasena) {
+        this.getInfoUser();
         this.userService.setCurrentUser( this.user );
         this.presentToast('Succesful Login', 'success');
         this.router.navigate(['/account-status']);
@@ -48,6 +49,13 @@ export class LoginPage implements OnInit {
     if (event.keyCode === 13) {
       this.onSubmit( form );
     }
+  }
+
+  getInfoUser(){
+    this.infoService.getUserInfo(this.user.Correo).subscribe(resp => {
+      this.user = resp;
+      this.userService.setCurrentUser(this.user);
+    });
   }
 
   async presentToast( message: string, color: string ) {
