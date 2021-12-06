@@ -4,7 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { InfoBancoService } from '../../services/info-banco.service';
-import { HistoryNormal } from '../../interfaces/interfaces';
+import { HistoryNormal, HistoryAdmin } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-history',
@@ -14,6 +14,8 @@ import { HistoryNormal } from '../../interfaces/interfaces';
 export class HistoryPage implements OnInit {
 
   transfers: HistoryNormal[] = [];
+  description: HistoryAdmin[] = [];
+  flag: boolean = false;
 
   constructor( private userService: UserService,
                private router: Router,
@@ -23,9 +25,23 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        this.infoService.getHistoryNormal(user.Correo).subscribe(resp => {
-          this.transfers.push(resp);
-        });
+        if (user[0].Rol === 'admin') {
+          this.infoService.getHistoryAdmin2().subscribe(resp => {
+            this.transfers.push(resp);
+          });
+          this.infoService.getHistoryAdmin().subscribe(resp => {
+            this.description.push(resp);
+          });
+          this.flag = true;
+          //console.log('Rol ADMIN');
+        }else{
+          this.infoService.getHistoryNormal(user[0].Correo).subscribe(resp => {
+            this.transfers.push(resp);
+          });
+          this.flag = false;
+          //console.log('Rol NOMRAL');
+        }
+        
       }
     });
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryNormal } from '../interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal } from '../interfaces/interfaces';
 import { User } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
@@ -45,7 +45,12 @@ export class InfoBancoService {
 
   getHistoryAdmin(){
     const query = `/historial`;
-    return this.queryGet<Account>(query);
+    return this.queryGet<HistoryAdmin>(query);
+  }
+
+  getHistoryAdmin2(){
+    const query = `/historial2`;
+    return this.queryGet<HistoryNormal>(query);
   }
 
   getHistoryNormal(email: string){

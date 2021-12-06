@@ -13,6 +13,12 @@ export interface HistoryNormal {
   NombreAccion: string;
 }
 
+export interface HistoryAdmin {
+  FechaYHora: string;
+  TipoTransaccion: string;
+  Descripcion: string;
+}
+
 export interface Account {
   idCuenta: number;
   TipoCuenta?: string;

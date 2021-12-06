@@ -2,6 +2,17 @@
 
 <ion-content>
     <ion-list>
+        <ng-container *ngIf= "flag">
+            <ion-item *ngFor="let des of description[0]">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-subtitle> <b>Date:</b> {{des.FechaYHora}}.</ion-card-subtitle>
+                        <ion-card-title color="primary">Type: {{ des.TipoTransaccion }}</ion-card-title>
+                        <p> <b>Description:</b> {{des.Descripcion}}.</p>
+                    </ion-card-header>
+                </ion-card>
+            </ion-item>
+        </ng-container>
         <ion-item *ngFor="let trans of transfers[0]">
             <ion-card>
                 <ion-card-header>
