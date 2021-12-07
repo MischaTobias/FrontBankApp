@@ -22,8 +22,9 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.checkUser();
+    await this.checkUser();
     this.componentes = this.dataService.getMenuOpts();
+    this.checkRouter();
   }
 
   checkRouter() {
@@ -36,7 +37,10 @@ export class AppComponent implements OnInit {
 
   async checkUser() {
     this.userService.getCurrentUser().then(user => {
-      this.currentUser = user[0];
+      if (user) {
+        this.currentUser = user[0];
+        this.isAdmin = this.currentUser.Rol === 'admin';
+      }
     });
   }
 }

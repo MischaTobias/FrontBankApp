@@ -29,7 +29,8 @@ export class TransferPage implements OnInit {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
         this.infoService.getAccountStatus(user[0].Correo).subscribe(resp => {
-          this.userAccounts.push(resp);
+          this.userAccounts = [];
+          this.userAccounts.push(...resp);
         });
       }
     });
@@ -37,9 +38,9 @@ export class TransferPage implements OnInit {
 
   changeDebitAccount( event ) {
     this.transfer.debitAccount = event.detail.value;
-    this.accountFriends.pop();
     this.infoService.getAccountsFriends(event.detail.value).subscribe(resp => {
-      this.accountFriends.push(resp);
+      this.accountFriends = [];
+      this.accountFriends.push(...resp);
     });
   }
 

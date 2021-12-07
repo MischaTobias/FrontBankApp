@@ -23,7 +23,7 @@ export class ManageUsersPage implements OnInit {
       if (!user[0]) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
-      } else if (!user[0].Rol) {
+      } else if (user[0].Rol !== 'admin') {
         this.presentToast('You don\'t have the permission for that', 'danger');
         this.router.navigate(['/account-status']);
       }

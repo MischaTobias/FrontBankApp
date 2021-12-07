@@ -15,7 +15,16 @@ export class UserService {
     await this.storage.create();
   }
 
+  async setCurrentAccount( accountId: number ) {
+    await this.storage.set('currentAccount', accountId);
+  }
+
+  async deleteCurrentAccount() {
+    await this.storage.remove('currentAccount');
+  }
+
   async setCurrentUser( user: User ) {
+    user.Contrasena = null;
     await this.storage.set('currentUser', user);
   }
 

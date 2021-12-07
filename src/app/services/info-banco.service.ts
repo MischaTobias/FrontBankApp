@@ -14,23 +14,6 @@ export class InfoBancoService {
 
   constructor(private http: HttpClient) { }
 
-    //METODOS GENERICOS
-
-  private queryGet<T>(query: string){
-    query = URL + VERSION + query;
-    return this.http.get<T>(query);
-  }
-
-  private queryPost<T>(query: string, body: any[]){
-    query = URL + VERSION + query;
-    return this.http.post<T>(query,body);
-  }
-
-  private queryPut<T>(query: string, body: any[]){
-    query = URL + VERSION + query;
-    return this.http.put<T>(query,body);
-  }
-
   //METODOS GET
 
   getCheckLogin(email: string){
@@ -40,7 +23,7 @@ export class InfoBancoService {
 
   getAccountStatus(email: string){
     const query = `/cuenta/${email}`;
-    return this.queryGet<Account>(query);
+    return this.queryGet<Account[]>(query);
   }
 
   getHistoryAdmin(){
@@ -65,9 +48,25 @@ export class InfoBancoService {
 
   getAccountsFriends(account: number){
     const query = `/relacionCuenta/${account}`;
-    return this.queryGet<AccountFriend>(query);
+    return this.queryGet<AccountFriend[]>(query);
   }
 
+  //METODOS GENERICOS
+
+  private queryGet<T>(query: string){
+    query = URL + VERSION + query;
+    return this.http.get<T>(query);
+  }
+
+  private queryPost<T>(query: string, body: any[]){
+    query = URL + VERSION + query;
+    return this.http.post<T>(query,body);
+  }
+
+  private queryPut<T>(query: string, body: any[]){
+    query = URL + VERSION + query;
+    return this.http.put<T>(query,body);
+  }
 
     //METODOS POST
 

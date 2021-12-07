@@ -24,14 +24,14 @@ export class AccountStatusPage implements OnInit {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
         this.infoService.getAccountStatus(user[0].Correo).subscribe(resp => {
-          this.userAccounts.push(resp);
+          this.userAccounts.push(...resp);
         });
       }
     });
   }
 
-  checkHistory( account: Account ) {
-
+  checkHistory( account ) {
+    console.log(account);
   }
 
   transfer( account: Account ) {

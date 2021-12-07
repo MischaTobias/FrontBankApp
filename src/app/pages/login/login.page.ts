@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
         this.presentToast('Succesful Login', 'success');
         this.router.navigate(['/account-status']);
       }else{
-        this.presentToast('Invalid password', 'danger');
+        this.presentToast('Error in login', 'danger');
       }
     });
   }
