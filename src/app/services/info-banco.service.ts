@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryAdmin, HistoryNormal } from '../interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal, AccountFriend } from '../interfaces/interfaces';
 import { User } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
@@ -62,6 +62,12 @@ export class InfoBancoService {
     const query = `/usuarioInfo/${email}`;
     return this.queryGet<User>(query);
   }
+
+  getAccountsFriends(account: number){
+    const query = `/relacionCuenta/${account}`;
+    return this.queryGet<AccountFriend>(query);
+  }
+
 
     //METODOS POST
 

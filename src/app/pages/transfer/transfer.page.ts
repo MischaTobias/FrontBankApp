@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Account, Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
+import { InfoBancoService } from '../../services/info-banco.service';
+import { AccountFriend } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-transfer',
@@ -12,41 +14,33 @@ import { UserService } from '../../services/user.service';
 })
 export class TransferPage implements OnInit {
 
-  userAccounts: Account[] = [
-    // {
-    //   accountId: 1,
-    //   currentBalance: 100
-    // },
-    // {
-    //   accountId: 2,
-    //   currentBalance: 200
-    // },
-    // {
-    //   accountId: 3,
-    //   currentBalance: 300
-    // },
-    // {
-    //   accountId: 4,
-    //   currentBalance: 400
-    // },
-    // {
-    //   accountId: 5,
-    //   currentBalance: 500
-    // },
-  ];
+  userAccounts: Account[] = [];
+  accountFriends: AccountFriend[] = [];
 
   transfer: Transfer = new Transfer();
   message = '';
 
   constructor( private userService: UserService,
                private router: Router,
+               private infoService: InfoBancoService,
                private toastCtrl: ToastController ) { }
 
   ngOnInit() {
+    this.userService.getCurrentUser().then((user: User) => {
+      if (user) {
+        this.infoService.getAccountStatus(user[0].Correo).subscribe(resp => {
+          this.userAccounts.push(resp);
+        });
+      }
+    });
   }
 
   changeDebitAccount( event ) {
     this.transfer.debitAccount = event.detail.value;
+    this.accountFriends.pop();
+    this.infoService.getAccountsFriends(event.detail.value).subscribe(resp => {
+      this.accountFriends.push(resp);
+    });
   }
 
   changeCreditAccount( event ) {

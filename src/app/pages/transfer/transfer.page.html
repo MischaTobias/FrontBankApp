@@ -17,9 +17,9 @@
                             class="customSelect"
                             mode="ios"
                             (ionChange)="changeDebitAccount( $event )">
-                    <ion-select-option *ngFor="let account of userAccounts"
-                                        value="{{ account.accountId }}">
-                        {{ account.accountId }}
+                    <ion-select-option *ngFor="let account of userAccounts[0]"
+                                        value="{{ account.idCuenta }}">
+                        {{ account.idCuenta }}
                     </ion-select-option>
                 </ion-select>
             </ion-item>
@@ -31,9 +31,9 @@
                           class="customSelect"
                           mode="ios"
                           (ionChange)="changeCreditAccount( $event )">
-                  <ion-select-option *ngFor="let account of userAccounts"
-                                      value="{{ account.accountId }}">
-                      {{ account.accountId }}
+                  <ion-select-option *ngFor="let account of accountFriends[0]"
+                                      value="{{ account.CuentaDestino }}">
+                      {{ account.CuentaDestino }}
                   </ion-select-option>
               </ion-select>
             </ion-item>

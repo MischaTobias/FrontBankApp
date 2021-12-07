@@ -26,6 +26,10 @@ export interface Account {
   Propietario?: number;
 }
 
+export interface AccountFriend {
+  CuentaDestino: number;
+}
+
 export class User {
   idUsuario?: number;
   Correo?: string;

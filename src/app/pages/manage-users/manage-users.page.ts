@@ -20,10 +20,10 @@ export class ManageUsersPage implements OnInit {
 
   ionViewWillEnter() {
     this.userService.getCurrentUser().then((user: User) => {
-      if (!user) {
+      if (!user[0]) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
-      } else if (!user.Rol) {
+      } else if (!user[0].Rol) {
         this.presentToast('You don\'t have the permission for that', 'danger');
         this.router.navigate(['/account-status']);
       }

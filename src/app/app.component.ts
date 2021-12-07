@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
   async checkUser() {
     this.userService.getCurrentUser().then(user => {
-      this.currentUser = user;
+      this.currentUser = user[0];
     });
   }
 }
