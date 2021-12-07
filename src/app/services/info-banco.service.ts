@@ -68,10 +68,24 @@ export class InfoBancoService {
     return this.http.put<T>(query,body);
   }
 
-    //METODOS POST
+  //METODOS POST
 
+  postTransfer(body: any[]){
+    const query = `/transferencia`;
+    return this.queryPost(query,body);
+  }
 
-    //METODOS PUT
+  postHistory(body: any[]){
+    const query = `/historial`;
+    return this.queryPost(query,body);
+  }
+
+  //METODOS PUT
+
+  putAccount(body: any[]){
+    const query = `/cuenta`;
+    return this.queryPut(query,body);
+  }
 
 
 }

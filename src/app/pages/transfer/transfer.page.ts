@@ -15,9 +15,11 @@ import { AccountFriend } from '../../interfaces/interfaces';
 export class TransferPage implements OnInit {
 
   userAccounts: Account[] = [];
+  debitAccount: number = 0;
+  creditAccount: number = 0;
   accountFriends: AccountFriend[] = [];
-
-  transfer: Transfer = new Transfer();
+  amount: number = 0;
+  flag_amount: boolean = false;
   message = '';
 
   constructor( private userService: UserService,
@@ -37,7 +39,7 @@ export class TransferPage implements OnInit {
   }
 
   changeDebitAccount( event ) {
-    this.transfer.debitAccount = event.detail.value;
+    this.debitAccount = event.detail.value;
     this.infoService.getAccountsFriends(event.detail.value).subscribe(resp => {
       this.accountFriends = [];
       this.accountFriends.push(...resp);
@@ -45,7 +47,7 @@ export class TransferPage implements OnInit {
   }
 
   changeCreditAccount( event ) {
-    this.transfer.creditAccount = event.detail.value;
+    this.creditAccount = event.detail.value;
   }
 
   onSubmit( form: NgForm ) {
@@ -54,10 +56,42 @@ export class TransferPage implements OnInit {
       return;
     }
 
-    console.log('debit', this.transfer.debitAccount);
-    console.log('credit', this.transfer.creditAccount);
-    console.log('amount', this.transfer.amount);
-    console.log('message', this.message);
+    this.userAccounts.forEach(element => {
+      if (element.idCuenta == this.debitAccount) {
+        if (element.MontoActual >= this.amount) {
+          this.flag_amount = true;
+        }
+      }
+    });
+
+    if (this.flag_amount) {
+      this.flag_amount = false;
+      //debit
+      this.postTransfer();
+      this.postHistory();
+      this.putAccount();
+      //credit
+      this.postTransfer();
+      this.postHistory();
+      this.putAccount();
+
+      this.presentToast('Valid transfer', 'success');
+    }else{
+      this.presentToast('Invalid amount', 'danger');
+    }
+
+  }
+
+  postTransfer(){
+
+  }
+
+  postHistory(){
+
+  }
+
+  putAccount(){
+
   }
 
   keyDownFunction( event, form ) {
