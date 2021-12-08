@@ -48,6 +48,7 @@ export class AccountStatusPage implements OnInit {
         this.userAccounts = [];
         this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
           this.userAccounts.push(...resp);
+        });
       }
     });
   }
