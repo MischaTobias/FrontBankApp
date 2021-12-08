@@ -3,30 +3,35 @@
         "icon": "list-outline",
         "name": "Account Status",
         "redirectTo": "/account-status",
-        "permission": false
+        "permission": false,
+        "notModal": true
     },
     {
         "icon": "swap-horizontal-outline",
         "name": "Transfer",
         "redirectTo": "/transfer",
-        "permission": false
+        "permission": false,
+        "notModal": true
     },
     {
         "icon": "time-outline",
         "name": "History",
         "redirectTo": "/history",
-        "permission": false
+        "permission": false,
+        "notModal": true
     },
     {
         "icon": "people-outline",
         "name": "Manage users",
         "redirectTo": "/manage-users",
-        "permission": true
+        "permission": true,
+        "notModal": true
     },
     {
         "icon": "settings-outline",
         "name": "Settings",
         "redirectTo": "/settings",
-        "permission": false
+        "permission": false,
+        "notModal": false
     }
 ]

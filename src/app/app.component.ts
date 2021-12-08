@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Componente, User } from './interfaces/interfaces';
 import { DataService } from './services/data.service';
 import { UserService } from './services/user.service';
+import { ModalController } from '@ionic/angular';
+import { SettingsPage } from './pages/settings/settings.page';
 
 @Component({
   selector: 'app-root',
@@ -13,18 +15,29 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit {
 
   componentes: Observable<Componente[]>;
-  isAdmin = false;
   currentUser: User;
+  isAdmin = false;
 
   constructor( private dataService: DataService,
                private router: Router,
-               private userService: UserService ) {
+               private userService: UserService,
+               private modalCtrl: ModalController ) {
   }
 
   async ngOnInit() {
     await this.checkUser();
     this.componentes = this.dataService.getMenuOpts();
     this.checkRouter();
+  }
+
+  async openUserSettings(){
+    const modal = await this.modalCtrl.create({
+      component: SettingsPage,
+      componentProps: {
+        prevUser: this.currentUser
+      }
+    });
+    await modal.present();
   }
 
   checkRouter() {
@@ -38,7 +51,7 @@ export class AppComponent implements OnInit {
   async checkUser() {
     this.userService.getCurrentUser().then(user => {
       if (user) {
-        this.currentUser = user[0];
+        this.currentUser = user;
         this.isAdmin = this.currentUser.Rol === 'admin';
       }
     });

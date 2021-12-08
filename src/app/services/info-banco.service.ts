@@ -28,22 +28,22 @@ export class InfoBancoService {
 
   getHistoryAdmin(){
     const query = `/historial`;
-    return this.queryGet<HistoryAdmin>(query);
+    return this.queryGet<HistoryAdmin[]>(query);
   }
 
   getHistoryAdmin2(){
     const query = `/historial2`;
-    return this.queryGet<HistoryNormal>(query);
+    return this.queryGet<HistoryNormal[]>(query);
   }
 
   getHistoryNormal(email: string){
     const query = `/historial/${email}`;
-    return this.queryGet<HistoryNormal>(query);
+    return this.queryGet<HistoryNormal[]>(query);
   }
 
   getUserInfo(email: string){
     const query = `/usuarioInfo/${email}`;
-    return this.queryGet<User>(query);
+    return this.queryGet<User[]>(query);
   }
 
   getAccountsFriends(account: number){

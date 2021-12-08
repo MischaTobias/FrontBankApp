@@ -11,11 +11,17 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle *ngFor="let c of componentes | async">
-          <ion-item *ngIf="isAdmin && c.permission || !c.permission"
+        <ion-item *ngIf="(isAdmin && c.permission || !c.permission) && c.notModal"
                     [routerLink]="c.redirectTo"
                     detail>
-          <ion-icon slot="start" [name]="c.icon" color="primary"></ion-icon>
-          {{ c.name }}
+            <ion-icon slot="start" [name]="c.icon" color="primary"></ion-icon>
+            {{ c.name }}
+        </ion-item>
+        <ion-item *ngIf="!c.notModal"
+                (click)="openUserSettings()"
+                detail>
+              <ion-icon slot="start" [name]="c.icon" color="primary"></ion-icon>
+              {{ c.name }}
         </ion-item>
         </ion-menu-toggle>
       </ion-list>

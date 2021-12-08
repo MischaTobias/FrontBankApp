@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
@@ -11,11 +12,32 @@ import { UserService } from '../../services/user.service';
 })
 export class SettingsPage implements OnInit {
 
+  @Input() prevUser: User;
+  newUser: User = new User();
+  isAvailable = false;
+
   constructor( private userService: UserService,
                private router: Router,
-               private toastCtrl: ToastController ) { }
+               private toastCtrl: ToastController,
+               private modalCtrl: ModalController ) { }
 
   ngOnInit() {
+    this.isAvailable = this.prevUser.Disponible === 1;
+  }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
+
+  onSubmit( form: NgForm ) {
+    //modificar al usuario
+    this.dismissModal();
+  }
+
+  keyDownFunction( event, form ) {
+    if (event.keyCode === 13) {
+      this.onSubmit( form );
+    }
   }
 
   ionViewWillEnter() {

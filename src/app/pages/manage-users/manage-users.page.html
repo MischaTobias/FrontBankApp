@@ -1,5 +1,24 @@
 <app-header title="Manage Users"></app-header>
 
 <ion-content>
-
+    <ion-grid>
+        <ion-row *ngFor="let user of appUsers">
+            <ion-col size="12">
+                <ion-card (click)="modifyAccount( user.idUsuario )">
+                    <ion-card-header>
+                        <ion-card-subtitle>{{ user.Nombre }}</ion-card-subtitle>
+                        <ion-card-title color="primary">{{ user.Correo }}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="appUsers.length === 0">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>No account available</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-row>
+    </ion-grid>
 </ion-content>
+

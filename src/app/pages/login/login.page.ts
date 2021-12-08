@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
 
   getInfoUser(){
     this.infoService.getUserInfo(this.user.Correo).subscribe(resp => {
-      this.user = resp;
+      this.user = resp[0];
       this.userService.setCurrentUser(this.user);
     });
   }
