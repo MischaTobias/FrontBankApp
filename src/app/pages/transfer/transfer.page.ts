@@ -5,7 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { Account, Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { InfoBancoService } from '../../services/info-banco.service';
-import { AccountFriend } from '../../interfaces/interfaces';
+import { AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-transfer',
@@ -22,6 +22,13 @@ export class TransferPage implements OnInit {
   flag_amount: boolean = false;
   message = '';
   credit: number = null;
+
+  //arrays post
+  amountNow: number = 0.00;
+  TransferNow: TransferA[] = [];
+  AccountNow: AccountPut[] = [];
+  HistoryNow: HistoryA[] = [];
+  idTransfer: number = 0;
 
   constructor( private userService: UserService,
                private router: Router,
@@ -69,13 +76,14 @@ export class TransferPage implements OnInit {
     if (this.flag_amount) {
       this.flag_amount = false;
       //debit
-      this.postTransfer();
-      this.postHistory();
-      this.putAccount();
+      this.postTransfer(this.amount,1,this.debitAccount,this.creditAccount);
+      this.getId();
+      this.postHistory(this.idTransfer);
+      this.putAccount('r',this.debitAccount);
       //credit
-      this.postTransfer();
-      this.postHistory();
-      this.putAccount();
+      this.postTransfer(this.amount,2,this.creditAccount,this.debitAccount);
+      this.postHistory(this.idTransfer+1);
+      this.putAccount('s',this.creditAccount);
 
       this.presentToast('Valid transfer', 'success');
     }else{
@@ -84,16 +92,65 @@ export class TransferPage implements OnInit {
 
   }
 
-  postTransfer(){
-
+  getId(){
+    this.infoService.getIdTransfer().subscribe(resp => {
+      this.idTransfer = resp[0].idTransferencias;
+      console.log(this.idTransfer);
+    });
   }
 
-  postHistory(){
-
+  postTransfer(montoA: number, accionA: number, origenA: number, destinoA: number){
+    this.TransferNow = [
+      {
+        monto : montoA,
+        accion : accionA,
+        cuentaOrigen : origenA,
+        cuentaDestino : destinoA
+      }
+    ]
+    console.log(this.TransferNow[0]);
+    //this.infoService.postTransfer(this.TransferNow);
   }
 
-  putAccount(){
+  postHistory(id: number){
+    let date = new Date();
+    console.log(date.toISOString());
+    console.log(id);
+    this.HistoryNow = [
+      {
+        FechaYHora: date,
+        Transferencia: id,
+        Descripcion: this.message
+      }
+    ]
+    console.log(this.HistoryNow[0]);
+    //this.infoService.postHistory(this.HistoryNow);
+  }
 
+  putAccount(op: string, acco : number){
+    //suma o resta dependiendo de la cuenta
+    if (op === 's') {
+      this.userAccounts.forEach(element => {
+        if (element.idCuenta == this.creditAccount) {
+          this.amountNow = element.MontoActual + this.amount;
+        }
+      });
+      console.log(this.creditAccount + ' = ' + this.amountNow.toFixed(2));
+    }else{
+      this.userAccounts.forEach(element => {
+        if (element.idCuenta == this.debitAccount) {
+          this.amountNow = element.MontoActual - this.amount;
+        }
+      });
+      console.log(this.debitAccount + ' = ' + this.amountNow.toFixed(2));
+    }
+    //arreglo formato para 2 decimales
+    this.amountNow = Number(this.amountNow.toFixed(2));
+    this.AccountNow = [{
+      MontoActual : this.amountNow
+    }]
+    console.log(this.AccountNow[0]);
+    //this.infoService.putAccount(acco,this.AccountNow);
   }
 
   keyDownFunction( event, form ) {

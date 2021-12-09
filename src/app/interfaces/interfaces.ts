@@ -28,6 +28,10 @@ export interface Account {
   Propietario?: number;
 }
 
+export interface AccountPut{
+  MontoActual?: number;
+}
+
 export interface AccountFriend {
   CuentaDestino: number;
 }
@@ -45,26 +49,6 @@ export class User {
   Telefono?: string;
 }
 
-// export class User {
-//     userId: number;
-//     email?: string;
-//     password?: string;
-//     role: boolean;
-//     available: boolean;
-//     address: string;
-//     dpi: string;
-//     birthDate: Date;
-//     name: string;
-//     phone: string;
-// }
-
-// export interface Account {
-//     idCuenta: number;
-//     type?: boolean;
-//     owner?: number;
-//     currentBalance?: number;
-// }
-
 export interface Relationships {
     relationshipId: number;
     originAccount: number;
@@ -79,6 +63,13 @@ export class Transfer {
     action: number;
 }
 
+export class TransferA {
+  monto: number;
+  accion: number;
+  cuentaOrigen: number;
+  cuentaDestino: number;
+}
+
 export interface Action {
     actionId: number;
     actionName: string;
@@ -90,4 +81,14 @@ export interface History {
     date: Date;
     transfer?: number;
     description: string;
+}
+
+export interface HistoryA {
+  FechaYHora: Date;
+  Transferencia: number;
+  Descripcion: string;
+}
+
+export interface IdTransfer {
+  idTransferencias: number;
 }
