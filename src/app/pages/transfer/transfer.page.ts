@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 import { Account, Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { InfoBancoService } from '../../services/info-banco.service';
 import { AccountFriend } from '../../interfaces/interfaces';
+import { AddNewFriendPage } from '../add-new-friend/add-new-friend.page';
 
 @Component({
   selector: 'app-transfer',
@@ -26,7 +29,8 @@ export class TransferPage implements OnInit {
   constructor( private userService: UserService,
                private router: Router,
                private infoService: InfoBancoService,
-               private toastCtrl: ToastController ) { }
+               private toastCtrl: ToastController,
+               private modalCtrl: ModalController ) { }
 
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
@@ -59,7 +63,7 @@ export class TransferPage implements OnInit {
     }
 
     this.userAccounts.forEach(element => {
-      if (element.idCuenta == this.debitAccount) {
+      if (element.idCuenta === this.debitAccount) {
         if (element.MontoActual >= this.amount) {
           this.flag_amount = true;
         }
@@ -82,6 +86,8 @@ export class TransferPage implements OnInit {
       this.presentToast('Invalid amount', 'danger');
     }
 
+    //redirect to account-status
+    this.router.navigate(['/account-status']);
   }
 
   postTransfer(){
@@ -94,6 +100,16 @@ export class TransferPage implements OnInit {
 
   putAccount(){
 
+  }
+
+  async addNewFriendAccount() {
+    const modal = await this.modalCtrl.create({
+      component: AddNewFriendPage,
+      componentProps: {
+        user: new User(),//obtenerUserPorId
+      }
+    });
+    await modal.present();
   }
 
   keyDownFunction( event, form ) {
