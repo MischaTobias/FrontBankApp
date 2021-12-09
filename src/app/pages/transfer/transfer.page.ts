@@ -30,7 +30,7 @@ export class TransferPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        this.infoService.getAccountStatus(user[0].Correo).subscribe(resp => {
+        this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
           this.userAccounts = [];
           this.userAccounts.push(...resp);
         });

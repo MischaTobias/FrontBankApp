@@ -1,5 +1,93 @@
-<app-header title="Settings"></app-header>
+<ion-header [translucent]="true">
+    <ion-toolbar>
+  
+      <ion-buttons slot="start">
+        <ion-button (click)="dismissModal()">
+            <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  
+      <ion-title>Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+  <form #form="ngForm" (ngSubmit)="onSubmit( form )" (keydown)="keyDownFunction( $event, form )">
 
+    <ion-list-header>
+      <ion-title>User data</ion-title>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Name:</ion-label>
+      <ion-input type="text"
+                 [placeholder]="prevUser.Nombre"
+                 name="name"
+                 [(ngModel)]="newUser.Nombre"
+                 required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Password:</ion-label>
+      <ion-input type="password"
+                 placeholder="*******"
+                 name="password"
+                 [(ngModel)]="newUser.Contrasena"
+                 required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Address:</ion-label>
+      <ion-input type="text"
+                 [placeholder]="prevUser.Direccion"
+                 name="address"
+                 [(ngModel)]="newUser.Direccion"
+                 required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Phone:</ion-label>
+      <ion-input type="text"
+                 [placeholder]="prevUser.Telefono"
+                 name="phone"
+                 [(ngModel)]="newUser.Telefono"
+                 required></ion-input>
+    </ion-item>
+
+    <!-- Datos que solo modifica el admin -->
+
+    <ng-container *ngIf="prevUser.Rol === 'admin'">
+      <ion-item>
+        <ion-label>Account is available: </ion-label>
+        <ion-toggle name="availability" [(ngModel)]="isAvailable"></ion-toggle>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input type="email"
+                   [placeholder]="prevUser.Correo"
+                   name="email"
+                   [(ngModel)]="newUser.Correo"
+                   pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                   required></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>DPI:</ion-label>
+        <ion-input type="text"
+                   [placeholder]="prevUser.DPI"
+                   name="text"
+                   [(ngModel)]="newUser.DPI"
+                   required></ion-input>
+      </ion-item>
+  
+      <ion-list-header>
+        <ion-title>User accounts</ion-title>
+      </ion-list-header>
+    </ng-container>
+
+    <ion-button [disabled]="form.invalid" type="submit" expand="block">
+      Save changes
+    </ion-button>
+ </form>
 </ion-content>

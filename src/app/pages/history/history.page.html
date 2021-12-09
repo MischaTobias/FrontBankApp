@@ -1,9 +1,9 @@
 <app-header title="History"></app-header>
 
-<ion-content>
+<ion-content class="ion-padding">
     <ion-list>
         <ng-container *ngIf= "flag">
-            <ion-item *ngFor="let des of description[0]">
+            <ion-item *ngFor="let des of description">
                 <ion-card>
                     <ion-card-header>
                         <ion-card-subtitle> <b>Date:</b> {{des.FechaYHora}}.</ion-card-subtitle>
@@ -13,7 +13,7 @@
                 </ion-card>
             </ion-item>
         </ng-container>
-        <ion-item *ngFor="let trans of transfers[0]">
+        <ion-item *ngFor="let trans of transfers">
             <ion-card>
                 <ion-card-header>
                     <ion-card-subtitle> <b>Date:</b> {{trans.FechaYHora}}.</ion-card-subtitle>
@@ -23,5 +23,12 @@
                 </ion-card-header>
             </ion-card>
         </ion-item>
+        <ion-row *ngIf="description.length + transfers.length === 0">
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>No history available</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-row>
     </ion-list>
 </ion-content>

@@ -4,6 +4,7 @@ export interface Componente {
     name: string;
     redirectTo: string;
     permission: boolean;
+    notModal: boolean;
 }
 
 export interface HistoryNormal {

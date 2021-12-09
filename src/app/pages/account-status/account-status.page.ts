@@ -23,7 +23,8 @@ export class AccountStatusPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        this.infoService.getAccountStatus(user[0].Correo).subscribe(resp => {
+        this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
+          this.userAccounts = [];
           this.userAccounts.push(...resp);
         });
       }
@@ -35,7 +36,7 @@ export class AccountStatusPage implements OnInit {
   }
 
   transfer( account: Account ) {
-
+    console.log(account);
   }
 
   ionViewWillEnter() {
@@ -43,6 +44,11 @@ export class AccountStatusPage implements OnInit {
       if (!user) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
+      } else {
+        this.userAccounts = [];
+        this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
+          this.userAccounts.push(...resp);
+        });
       }
     });
   }

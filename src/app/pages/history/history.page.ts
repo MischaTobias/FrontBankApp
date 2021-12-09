@@ -15,7 +15,7 @@ export class HistoryPage implements OnInit {
 
   transfers: HistoryNormal[] = [];
   description: HistoryAdmin[] = [];
-  flag: boolean = false;
+  flag = false;
 
   constructor( private userService: UserService,
                private router: Router,
@@ -25,23 +25,24 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
-        if (user[0].Rol === 'admin') {
+        this.transfers = [];
+        if (user.Rol === 'admin') {
+          this.description = [];
           this.infoService.getHistoryAdmin2().subscribe(resp => {
-            this.transfers.push(resp);
+            this.transfers.push( ...resp );
           });
           this.infoService.getHistoryAdmin().subscribe(resp => {
-            this.description.push(resp);
+            this.description.push( ...resp );
           });
           this.flag = true;
           //console.log('Rol ADMIN');
-        }else{
-          this.infoService.getHistoryNormal(user[0].Correo).subscribe(resp => {
-            this.transfers.push(resp);
+        } else {
+          this.infoService.getHistoryNormal(user.Correo).subscribe(resp => {
+            this.transfers.push( ...resp );
           });
           this.flag = false;
           //console.log('Rol NOMRAL');
         }
-        
       }
     });
   }
