@@ -40,12 +40,12 @@ export class AccountStatusPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.userAccounts = [];
     this.userService.getCurrentUser().then((user: User) => {
       if (!user) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
       } else {
-        this.userAccounts = [];
         this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
           this.userAccounts.push(...resp);
         });

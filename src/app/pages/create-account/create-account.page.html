@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+          <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Create new savings account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form #form="ngForm" (ngSubmit)="onSubmit( form )" (keydown)="keyDownFunction( $event, form )">
+
+    <ion-item>
+      <ion-label>Initial amount:</ion-label>
+      <ion-input type="number"
+                 placeholder="0.0"
+                 slot="end"
+                 name="amount"
+                 [(ngModel)]="initialAmount"
+                 required></ion-input>
+    </ion-item>
+
+    <ion-button [disabled]="form.invalid" type="submit" expand="block">
+      Create account
+    </ion-button>
+ </form>
+</ion-content>

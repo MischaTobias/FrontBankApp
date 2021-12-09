@@ -7,7 +7,7 @@
         </ion-button>
       </ion-buttons>
   
-      <ion-title>Settings</ion-title>
+      <ion-title>{{ title }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -21,42 +21,41 @@
     <ion-item>
       <ion-label>Name:</ion-label>
       <ion-input type="text"
-                 [placeholder]="prevUser.Nombre"
+                 [placeholder]="user.Nombre"
                  name="name"
-                 [(ngModel)]="newUser.Nombre"
+                 [(ngModel)]="user.Nombre"
                  required></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label>Password:</ion-label>
       <ion-input type="password"
-                 placeholder="*******"
+                 [placeholder]="user.Contrasena"
                  name="password"
-                 [(ngModel)]="newUser.Contrasena"
-                 required></ion-input>
+                 [(ngModel)]="user.Contrasena"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Address:</ion-label>
       <ion-input type="text"
-                 [placeholder]="prevUser.Direccion"
+                 [placeholder]="user.Direccion"
                  name="address"
-                 [(ngModel)]="newUser.Direccion"
+                 [(ngModel)]="user.Direccion"
                  required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Phone:</ion-label>
       <ion-input type="text"
-                 [placeholder]="prevUser.Telefono"
+                 [placeholder]="user.Telefono"
                  name="phone"
-                 [(ngModel)]="newUser.Telefono"
+                 [(ngModel)]="user.Telefono"
                  required></ion-input>
     </ion-item>
 
     <!-- Datos que solo modifica el admin -->
 
-    <ng-container *ngIf="prevUser.Rol === 'admin'">
+    <ng-container *ngIf="isAdmin">
       <ion-item>
         <ion-label>Account is available: </ion-label>
         <ion-toggle name="availability" [(ngModel)]="isAvailable"></ion-toggle>
@@ -65,9 +64,9 @@
       <ion-item>
         <ion-label>Email:</ion-label>
         <ion-input type="email"
-                   [placeholder]="prevUser.Correo"
+                   [placeholder]="user.Correo"
                    name="email"
-                   [(ngModel)]="newUser.Correo"
+                   [(ngModel)]="user.Correo"
                    pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                    required></ion-input>
       </ion-item>
@@ -75,19 +74,39 @@
       <ion-item>
         <ion-label>DPI:</ion-label>
         <ion-input type="text"
-                   [placeholder]="prevUser.DPI"
+                   [placeholder]="user.DPI"
                    name="text"
-                   [(ngModel)]="newUser.DPI"
+                   [(ngModel)]="user.DPI"
                    required></ion-input>
       </ion-item>
   
-      <ion-list-header>
+      <ion-list-header *ngIf="userAccounts.length !== 0">
         <ion-title>User accounts</ion-title>
       </ion-list-header>
+
+      <ion-grid>
+        <ion-row *ngFor="let account of userAccounts">
+            <ion-col size="12">
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-subtitle>Account no. {{ account.idCuenta }} - {{ account.TipoCuenta }}</ion-card-subtitle>
+                        <ion-card-title>Current Balance: Q {{ account.MontoActual }}</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="addNewAccount()">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
     </ng-container>
 
     <ion-button [disabled]="form.invalid" type="submit" expand="block">
-      Save changes
+      {{ buttonText }}
     </ion-button>
  </form>
 </ion-content>

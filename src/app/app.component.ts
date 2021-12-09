@@ -34,7 +34,9 @@ export class AppComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
       componentProps: {
-        prevUser: this.currentUser
+        user: this.currentUser,
+        title: 'Modify user',
+        buttonText: 'Save changes'
       }
     });
     await modal.present();

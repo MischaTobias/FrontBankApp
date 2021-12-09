@@ -49,7 +49,21 @@ export class ManageUsersPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
       componentProps: {
-        prevUser: new User()//obtenerUserPorId
+        user: this.appUsers[userId - 1],//obtenerUserPorId
+        title: 'Modify user',
+        buttonText: 'Save changes'
+      }
+    });
+    await modal.present();
+  }
+
+  async addNewUser() {
+    const modal = await this.modalCtrl.create({
+      component: SettingsPage,
+      componentProps: {
+        user: new User(),//obtenerUserPorId
+        title: 'Create new user',
+        buttonText: 'Create user'
       }
     });
     await modal.present();
