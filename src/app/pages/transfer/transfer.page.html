@@ -30,6 +30,7 @@
                           interface="popover"
                           class="customSelect"
                           mode="ios"
+                          [value]="credit"
                           (ionChange)="changeCreditAccount( $event )">
                   <ion-select-option *ngFor="let account of accountFriends"
                                       value="{{ account.CuentaDestino }}">
