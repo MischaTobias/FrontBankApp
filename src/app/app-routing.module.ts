@@ -36,6 +36,10 @@ const routes: Routes = [
     path: 'create-account',
     loadChildren: () => import('./pages/create-account/create-account.module').then( m => m.CreateAccountPageModule)
   },
+  {
+    path: 'add-new-friend',
+    loadChildren: () => import('./pages/add-new-friend/add-new-friend.module').then( m => m.AddNewFriendPageModule)
+  },
 ];
 
 @NgModule({

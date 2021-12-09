@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+          <ion-icon slot="icon-only" name="chevron-down-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Add new transfer account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-searchbar placeholder="Account number"
+                 inputmode="text"
+                 type="text"
+                 (ionChange)="onSearchChange( $event )"
+                 [debounce]="500"></ion-searchbar>
+
+  <ion-list-header>
+    <ion-label>Available Accounts</ion-label>
+  </ion-list-header>
+  
+  <ion-grid>
+    <ion-row *ngFor="let item of accounts">
+        <ion-col size="12">
+            <ion-card (click)="addAccount( item.accountNo )">
+                <ion-card-header>
+                    <ion-card-subtitle>Owner. {{ item.user }}</ion-card-subtitle>
+                    <ion-card-title color="primary">Account no. {{ item.accountNo }}</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <ion-row *ngIf="accounts.length === 0">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>No account available</ion-card-title>
+            </ion-card-header>
+        </ion-card>
+    </ion-row>
+</ion-grid>
+
+
+</ion-content>
