@@ -22,7 +22,9 @@ export class SettingsPage implements OnInit {
                private modalCtrl: ModalController ) { }
 
   ngOnInit() {
-    this.isAvailable = this.prevUser.Disponible === 1;
+    this.userService.getCurrentUser().then((user: User) => {
+      this.isAvailable = user.Disponible === 1;
+    });
   }
 
   dismissModal() {
