@@ -21,6 +21,7 @@ export class TransferPage implements OnInit {
   amount: number = null;
   flag_amount: boolean = false;
   message = '';
+  credit: number = null;
 
   constructor( private userService: UserService,
                private router: Router,
@@ -39,6 +40,7 @@ export class TransferPage implements OnInit {
   }
 
   changeDebitAccount( event ) {
+    this.credit = null;
     this.debitAccount = event.detail.value;
     this.infoService.getAccountsFriends(event.detail.value).subscribe(resp => {
       this.accountFriends = [];

@@ -21,10 +21,10 @@ export class AccountStatusPage implements OnInit {
                private toastCtrl: ToastController ) { }
 
   ngOnInit() {
+    this.userAccounts = [];
     this.userService.getCurrentUser().then((user: User) => {
       if (user) {
         this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
-          this.userAccounts = [];
           this.userAccounts.push(...resp);
         });
       }
