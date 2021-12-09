@@ -18,7 +18,7 @@ export class TransferPage implements OnInit {
   debitAccount: number = 0;
   creditAccount: number = 0;
   accountFriends: AccountFriend[] = [];
-  amount: number = 0;
+  amount: number = null;
   flag_amount: boolean = false;
   message = '';
 
