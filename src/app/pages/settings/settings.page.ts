@@ -28,20 +28,7 @@ export class SettingsPage implements OnInit {
   accountMon: number = 0;
   accountAho: number = 0;
   AccFriendNow: Relationships[] = [];
-  userAccounts: Account[] = [
-    {
-      idCuenta: 1,
-      MontoActual: 10
-    },
-    {
-      idCuenta: 2,
-      MontoActual: 20
-    },
-    {
-      idCuenta: 3,
-      MontoActual: 30
-    },
-  ];
+  userAccounts: Account[] = [];
 
   constructor( private userService: UserService,
                private router: Router,
@@ -196,6 +183,9 @@ export class SettingsPage implements OnInit {
       this.isAdmin = user.Rol === 'admin';
 
       //ir a traer la lista de cuentas de la persona
+      this.infoBancoService.getAccountStatus(user.Correo).subscribe(resp => {
+        this.userAccounts.push(...resp);
+      });
     });
   }
 

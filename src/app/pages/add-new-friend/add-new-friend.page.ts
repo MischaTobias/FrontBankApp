@@ -4,6 +4,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { Account, AccountSearchFriend, User , Relationships} from 'src/app/interfaces/interfaces';
 import { InfoBancoService } from 'src/app/services/info-banco.service';
 import { UserService } from '../../services/user.service';
+import { HistoryB } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-add-new-friend',
@@ -16,6 +17,7 @@ export class AddNewFriendPage implements OnInit {
   userAccounts: Account[] = [];
   debitAccount: number = 0;
   AccFriendNow: Relationships[] = [];
+  HistoryNow: HistoryB[] = [];
 
   constructor( private modalCtrl: ModalController,
                private infoService: InfoBancoService,
@@ -33,6 +35,7 @@ export class AddNewFriendPage implements OnInit {
       return;
     }
     this.postAccountsFriendsAdd(Number(this.debitAccount),accountNumber);
+    this.postHistoryUser("Relacion Cuenta","Se relaciono cuenta " + this.debitAccount + " " + accountNumber);
     this.dismissModal();
   }
 
@@ -47,6 +50,18 @@ export class AddNewFriendPage implements OnInit {
     this.infoService.postAccountsFriends(this.AccFriendNow[0]);
   }
 
+  postHistoryUser(type: string,description: string){
+    const date = new Date();
+    this.HistoryNow = [
+      {
+        tipoTransaccion: type,
+        fechaYHora: date.toISOString(),
+        descripcion: description
+      }
+    ];
+    //console.log(this.HistoryNow[0]);
+    this.infoService.postHistoryUser(this.HistoryNow[0]);
+  }
 
   async presentToast( message: string, color: string ) {
     const toast = await this.toastCtrl.create({
