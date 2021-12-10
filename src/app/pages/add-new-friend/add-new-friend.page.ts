@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { friendAccount } from 'src/app/interfaces/interfaces';
+import { InfoBancoService } from 'src/app/services/info-banco.service';
 
 @Component({
   selector: 'app-add-new-friend',
@@ -8,18 +10,10 @@ import { ModalController } from '@ionic/angular';
 })
 export class AddNewFriendPage implements OnInit {
 
-  accounts = [
-    {
-      user: 'Mischa',
-      accountNo: '849849-65498'
-    },
-    {
-      user: 'Hola',
-      accountNo: '8498asdfa5498'
-    },
-  ];
+  accounts: friendAccount[] = [];
 
-  constructor( private modalCtrl: ModalController ) { }
+  constructor( private modalCtrl: ModalController,
+               private infoBancoService: InfoBancoService ) { }
 
   dismissModal() {
     this.modalCtrl.dismiss();
@@ -32,6 +26,8 @@ export class AddNewFriendPage implements OnInit {
 
   onSearchChange( event ) {
     //buscar la cuenta amiga
+    console.log(event.detail.value);
+    this.accounts = this.infoBancoService.getAccounts( event.detail.value );
   }
 
   ngOnInit() {
