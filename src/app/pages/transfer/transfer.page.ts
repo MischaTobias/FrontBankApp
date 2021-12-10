@@ -19,13 +19,13 @@ import { AddNewFriendPage } from '../add-new-friend/add-new-friend.page';
 export class TransferPage implements OnInit {
 
   userAccounts: Account[] = [];
-  debitAccount: number = 0;
   creditAccount: number = 0;
   accountFriends: AccountFriend[] = [];
   amount: number = null;
   flag_amount: boolean = false;
   message = '';
   credit: number = null;
+  debitAccount: number = 0;
 
   //arrays post
   amountNow: number = 0.00;

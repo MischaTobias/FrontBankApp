@@ -23,6 +23,24 @@
   </ion-list-header>
   
   <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Origin account:</ion-label>
+          <ion-select placeholder="Select account"
+                      interface="popover"
+                      class="customSelect"
+                      mode="ios"
+                      (ionChange)="changeDebitAccount( $event )">
+              <ion-select-option *ngFor="let account of userAccounts"
+                                  value="{{ account.idCuenta }}">
+                  {{ account.idCuenta }}
+              </ion-select-option>
+          </ion-select>
+      </ion-item>
+      </ion-col>
+    </ion-row>
+
     <ion-row *ngFor="let item of accounts">
         <ion-col size="12">
             <ion-card (click)="addAccount( item.accountId )">

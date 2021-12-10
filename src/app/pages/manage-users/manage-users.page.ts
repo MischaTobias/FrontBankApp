@@ -49,7 +49,8 @@ export class ManageUsersPage implements OnInit {
       componentProps: {
         user: new User(),//obtenerUserPorId
         title: 'Create new user',
-        buttonText: 'Create user'
+        buttonText: 'Create user',
+        source: 'CreateNewUser'
       }
     });
     await modal.present();
