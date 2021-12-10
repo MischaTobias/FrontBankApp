@@ -84,9 +84,9 @@ export interface History {
 }
 
 export interface HistoryA {
-  FechaYHora: Date;
-  Transferencia: number;
-  Descripcion: string;
+  fechaYHora: string;
+  transferencia: number;
+  descripcion: string;
 }
 
 export interface IdTransfer {

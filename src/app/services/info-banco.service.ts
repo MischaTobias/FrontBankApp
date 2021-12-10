@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer } from '../interfaces/interfaces';
 import { User } from 'src/app/interfaces/interfaces';
@@ -63,31 +63,50 @@ export class InfoBancoService {
     return this.http.get<T>(query);
   }
 
-  private queryPost<T>(query: string, body: any[]){
+  private queryPost<T>(query: string, body: any){
     query = URL + VERSION + query;
-    return this.http.post<T>(query,body);
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+         });    
+    let options = {
+      headers: httpHeaders
+         };
+    return this.http.post<T>(query,body,options).subscribe(res => { 
+        console.log(res);	
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
-  private queryPut<T>(query: string, body: any[]){
+  private queryPut<T>(query: string, body: any){
     query = URL + VERSION + query;
-    return this.http.put<T>(query,body);
+    return this.http.put<T>(query,body).subscribe(res => {
+      console.log(res);
+      },
+      err => {
+      console.log(err);
+      }
+      );
   }
 
   //METODOS POST
 
-  postTransfer(body: TransferA[]){
-    const query = `/transferencia`;
+  postTransfer(body: TransferA){
+    const query = `/tranferencia`;
     return this.queryPost(query,body);
   }
 
-  postHistory(body: HistoryA[]){
-    const query = `/historial`;
+  postHistory(body: HistoryA){
+    const query = `/historial2`;
     return this.queryPost(query,body);
   }
 
   //METODOS PUT
 
-  putAccount(account: number, body: AccountPut[]){
+  putAccount(account: number, body: AccountPut){
     const query = `/cuenta/${account}`;
     return this.queryPut(query,body);
   }

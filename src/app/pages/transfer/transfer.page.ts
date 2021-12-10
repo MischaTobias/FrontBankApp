@@ -44,6 +44,7 @@ export class TransferPage implements OnInit {
         });
       }
     });
+    this.getId();
   }
 
   changeDebitAccount( event ) {
@@ -76,14 +77,13 @@ export class TransferPage implements OnInit {
     if (this.flag_amount) {
       this.flag_amount = false;
       //debit
-      this.postTransfer(this.amount,1,this.debitAccount,this.creditAccount);
-      this.getId();
-      this.postHistory(this.idTransfer);
-      this.putAccount('r',this.debitAccount);
+      // this.postTransfer(this.amount,1,this.debitAccount,this.creditAccount);
+      // this.postHistory(this.idTransfer+1);
+      // this.putAccount('r',this.debitAccount);
       //credit
-      this.postTransfer(this.amount,2,this.creditAccount,this.debitAccount);
-      this.postHistory(this.idTransfer+1);
-      this.putAccount('s',this.creditAccount);
+      // this.postTransfer(this.amount,2,this.creditAccount,this.debitAccount);
+      // this.postHistory(this.idTransfer+2);
+      // this.putAccount('s',this.creditAccount);
 
       this.presentToast('Valid transfer', 'success');
     }else{
@@ -93,9 +93,9 @@ export class TransferPage implements OnInit {
   }
 
   getId(){
-    this.infoService.getIdTransfer().subscribe(resp => {
+   this.infoService.getIdTransfer().subscribe(resp => {
       this.idTransfer = resp[0].idTransferencias;
-      console.log(this.idTransfer);
+      //console.log(this.idTransfer);
     });
   }
 
@@ -109,22 +109,21 @@ export class TransferPage implements OnInit {
       }
     ]
     console.log(this.TransferNow[0]);
-    //this.infoService.postTransfer(this.TransferNow);
+    this.infoService.postTransfer(this.TransferNow[0]);
   }
 
   postHistory(id: number){
     let date = new Date();
-    console.log(date.toISOString());
-    console.log(id);
+    //console.log(date.toISOString());
     this.HistoryNow = [
       {
-        FechaYHora: date,
-        Transferencia: id,
-        Descripcion: this.message
+        fechaYHora: date.toISOString(),
+        transferencia: id,
+        descripcion: this.message
       }
     ]
     console.log(this.HistoryNow[0]);
-    //this.infoService.postHistory(this.HistoryNow);
+    this.infoService.postHistory(this.HistoryNow[0]);
   }
 
   putAccount(op: string, acco : number){
@@ -135,14 +134,14 @@ export class TransferPage implements OnInit {
           this.amountNow = element.MontoActual + this.amount;
         }
       });
-      console.log(this.creditAccount + ' = ' + this.amountNow.toFixed(2));
+      //console.log(this.creditAccount + ' = ' + this.amountNow.toFixed(2));
     }else{
       this.userAccounts.forEach(element => {
         if (element.idCuenta == this.debitAccount) {
           this.amountNow = element.MontoActual - this.amount;
         }
       });
-      console.log(this.debitAccount + ' = ' + this.amountNow.toFixed(2));
+      //console.log(this.debitAccount + ' = ' + this.amountNow.toFixed(2));
     }
     //arreglo formato para 2 decimales
     this.amountNow = Number(this.amountNow.toFixed(2));
@@ -150,7 +149,7 @@ export class TransferPage implements OnInit {
       MontoActual : this.amountNow
     }]
     console.log(this.AccountNow[0]);
-    //this.infoService.putAccount(acco,this.AccountNow);
+    this.infoService.putAccount(acco,this.AccountNow[0]);
   }
 
   keyDownFunction( event, form ) {
