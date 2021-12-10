@@ -77,13 +77,13 @@ export class TransferPage implements OnInit {
     if (this.flag_amount) {
       this.flag_amount = false;
       //debit
-      // this.postTransfer(this.amount,1,this.debitAccount,this.creditAccount);
-      // this.postHistory(this.idTransfer+1);
-      // this.putAccount('r',this.debitAccount);
+      this.postTransfer(this.amount,1,this.debitAccount,this.creditAccount);
+      this.postHistory(this.idTransfer+1);
+      this.putAccount('r',this.debitAccount);
       //credit
-      // this.postTransfer(this.amount,2,this.creditAccount,this.debitAccount);
-      // this.postHistory(this.idTransfer+2);
-      // this.putAccount('s',this.creditAccount);
+      this.postTransfer(this.amount,2,this.creditAccount,this.debitAccount);
+      this.postHistory(this.idTransfer+2);
+      this.putAccount('s',this.creditAccount);
 
       this.presentToast('Valid transfer', 'success');
     }else{
@@ -108,7 +108,7 @@ export class TransferPage implements OnInit {
         cuentaDestino : destinoA
       }
     ]
-    console.log(this.TransferNow[0]);
+    //console.log(this.TransferNow[0]);
     this.infoService.postTransfer(this.TransferNow[0]);
   }
 
@@ -122,7 +122,7 @@ export class TransferPage implements OnInit {
         descripcion: this.message
       }
     ]
-    console.log(this.HistoryNow[0]);
+    //console.log(this.HistoryNow[0]);
     this.infoService.postHistory(this.HistoryNow[0]);
   }
 
@@ -148,7 +148,7 @@ export class TransferPage implements OnInit {
     this.AccountNow = [{
       MontoActual : this.amountNow
     }]
-    console.log(this.AccountNow[0]);
+    //console.log(this.AccountNow[0]);
     this.infoService.putAccount(acco,this.AccountNow[0]);
   }
 

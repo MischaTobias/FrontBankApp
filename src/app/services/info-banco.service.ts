@@ -73,7 +73,7 @@ export class InfoBancoService {
       headers: httpHeaders
          };
     return this.http.post<T>(query,body,options).subscribe(res => { 
-        console.log(res);	
+        //console.log(res);	
       },
       err => {
         console.log(err);
@@ -84,7 +84,7 @@ export class InfoBancoService {
   private queryPut<T>(query: string, body: any){
     query = URL + VERSION + query;
     return this.http.put<T>(query,body).subscribe(res => {
-      console.log(res);
+      //console.log(res);
       },
       err => {
       console.log(err);
