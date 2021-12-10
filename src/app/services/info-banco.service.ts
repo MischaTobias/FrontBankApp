@@ -51,10 +51,19 @@ export class InfoBancoService {
     return this.queryGet<AccountFriend[]>(query);
   }
 
+  getIdTransfer(){
+    const query = `/tranferencia`;
+    return this.queryGet<IdTransfer>(query);
+  }
+
   createNewUser( user: User ) {
     console.log( user );
   }
 
+  modifyUser( user: User ) {
+    console.log( user );
+  }
+  
   //METODOS GENERICOS
 
   private queryGet<T>(query: string){
@@ -109,24 +118,6 @@ export class InfoBancoService {
     const query = `/cuenta/${account}`;
     return this.queryPut(query, body);
   }
-
-  //METODOS GENERICOS
-
-  private queryGet<T>(query: string){
-    query = URL + VERSION + query;
-    return this.http.get<T>(query);
-  }
-
-  private queryPost<T>(query: string, body: any){
-    query = URL + VERSION + query;
-    return this.http.post<T>(query,body);
-  }
-
-  private queryPut<T>(query: string, body: any){
-    query = URL + VERSION + query;
-    return this.http.put<T>(query,body);
-  }
-
 
 
 }
