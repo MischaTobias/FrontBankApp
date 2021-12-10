@@ -5,6 +5,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { SettingsPage } from '../settings/settings.page';
+import { InfoBancoService } from '../../services/info-banco.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -13,35 +14,20 @@ import { SettingsPage } from '../settings/settings.page';
 })
 export class ManageUsersPage implements OnInit {
 
-  appUsers: User[] = [
-    {
-      idUsuario: 1,
-      Nombre: 'Neto',
-      Correo: 'neto@gmail.com'
-    },
-    {
-      idUsuario: 2,
-      Nombre: 'Aylinne',
-      Correo: 'aylinne@gmail.com'
-    },
-    {
-      idUsuario: 3,
-      Nombre: 'Mansi',
-      Correo: 'mansi@gmail.com'
-    },
-    {
-      idUsuario: 4,
-      Nombre: 'Diego',
-      Correo: 'diego@gmail.com'
-    },
-  ];
+  appUsers: User[] = [];
 
   constructor( private userService: UserService,
                private router: Router,
+               private infoService: InfoBancoService,
                private toastCtrl: ToastController,
                private modalCtrl: ModalController ) { }
 
   ngOnInit() {
+    this.infoService.getUsers().subscribe(resp => {
+      if (this.appUsers.length === 0) {
+        this.appUsers.push(...resp);
+      }
+    });
   }
 
   async modifyAccount( userId: number ) {

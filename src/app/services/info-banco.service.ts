@@ -19,6 +19,11 @@ export class InfoBancoService {
 
   //METODOS GET
 
+  getUsers(){
+    const query = `/usuario`;
+    return this.queryGet<User[]>(query);
+  }
+
   getCheckLogin(email: string){
     const query = `/usuario/${email}`;
     return this.queryGet<any>(query);
