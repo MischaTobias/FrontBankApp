@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Account, AccountFriend, friendAccount, User } from 'src/app/interfaces/interfaces';
+import { Account, AccountSearchFriend, User , Relationships} from 'src/app/interfaces/interfaces';
 import { InfoBancoService } from 'src/app/services/info-banco.service';
 import { UserService } from '../../services/user.service';
 
@@ -12,18 +12,10 @@ import { UserService } from '../../services/user.service';
 })
 export class AddNewFriendPage implements OnInit {
 
-  accounts: friendAccount[] = [
-    {
-      accountId: '1234',
-      owner: 'Mischa'
-    },
-    {
-      accountId: '5678',
-      owner: 'Walter'
-    },
-  ];
+  accounts: AccountSearchFriend[] = [];
   userAccounts: Account[] = [];
   debitAccount: number = 0;
+  AccFriendNow: Relationships[] = [];
 
   constructor( private modalCtrl: ModalController,
                private infoService: InfoBancoService,
@@ -34,16 +26,25 @@ export class AddNewFriendPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  addAccount( accountNumber: string ) {
+  addAccount( accountNumber: number ) {
     //add acount
     if (this.debitAccount === 0) {
       this.presentToast('Please select an origin account', 'danger');
       return;
     }
-
-    console.log(this.debitAccount);
-    console.log(accountNumber);
+    this.postAccountsFriendsAdd(Number(this.debitAccount),accountNumber);
     this.dismissModal();
+  }
+
+  postAccountsFriendsAdd(origenA: number, destinoA: number){
+    this.AccFriendNow = [
+      {
+        cuentaOrigen : origenA,
+        cuentaDestino : destinoA
+      }
+    ];
+    //console.log(this.AccFriendNow[0]);
+    this.infoService.postAccountsFriends(this.AccFriendNow[0]);
   }
 
 
@@ -62,8 +63,14 @@ export class AddNewFriendPage implements OnInit {
 
   onSearchChange( event ) {
     //buscar la cuenta amiga
-    console.log(event.detail.value);
-    this.accounts = this.infoService.getAccounts( event.detail.value );
+    if (event.detail.value.length === 8) {
+      this.infoService.getAllAccountsFriends(event.detail.value).subscribe(resp => {
+        this.accounts = [];
+        this.accounts.push(...resp);
+        ///console.log(this.accounts[0].idCuenta);
+      });
+    }
+    //console.log(event.detail.value);
   }
 
   ngOnInit() {
@@ -75,6 +82,7 @@ export class AddNewFriendPage implements OnInit {
         });
       }
     });
+
   }
 
 }

@@ -4,8 +4,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, friendAccount } from '../interfaces/interfaces';
-import { User } from 'src/app/interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, Relationships } from '../interfaces/interfaces';
+import { User, AccountSearchFriend } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
 const VERSION = environment.version;
@@ -59,15 +59,14 @@ export class InfoBancoService {
     return this.queryGet<AccountFriend[]>(query);
   }
 
+  getAllAccountsFriends(account: number){
+    const query = `/cuentaAmiga/${account}`;
+    return this.queryGet<AccountSearchFriend[]>(query);
+  }
+
   getIdTransfer(){
     const query = `/tranferencia`;
     return this.queryGet<IdTransfer>(query);
-  }
-
-  getAccounts( account: string ) {
-    const query = `/${ account }`;
-    //obtener el objeto con {id.cuenta, u.nombre}
-    return [] as friendAccount[];
   }
 
   createNewUser( user: User ) {
@@ -87,6 +86,11 @@ export class InfoBancoService {
 
   postHistory(body: HistoryA){
     const query = `/historial2`;
+    return this.queryPost(query, body);
+  }
+
+  postAccountsFriends( body: Relationships ) {
+    const query = `/relacionCuenta`;
     return this.queryPost(query, body);
   }
 

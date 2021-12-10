@@ -37,6 +37,11 @@ export interface AccountFriend {
   Nombre: string
 }
 
+export interface AccountSearchFriend {
+  idCuenta: number; 
+  Nombre: string
+}
+
 export class User {
   idUsuario?: number;
   Correo?: string;
@@ -51,9 +56,8 @@ export class User {
 }
 
 export interface Relationships {
-    relationshipId: number;
-    originAccount: number;
-    destinyAccount: number;
+  cuentaOrigen: number;
+  cuentaDestino: number;
 }
 
 export class Transfer {
@@ -92,9 +96,4 @@ export interface HistoryA {
 
 export interface IdTransfer {
   idTransferencias: number;
-}
-
-export interface friendAccount {
-  accountId: string;
-  owner: string;
 }
