@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable prefer-const */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -63,42 +65,6 @@ export class InfoBancoService {
   modifyUser( user: User ) {
     console.log( user );
   }
-  
-  //METODOS GENERICOS
-
-  private queryGet<T>(query: string){
-    query = URL + VERSION + query;
-    return this.http.get<T>(query);
-  }
-
-  private queryPost<T>(query: string, body: any){
-    query = URL + VERSION + query;
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Cache-Control': 'no-cache'
-         });    
-    let options = {
-      headers: httpHeaders
-         };
-    return this.http.post<T>(query,body,options).subscribe(res => { 
-        //console.log(res);	
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  private queryPut<T>(query: string, body: any){
-    query = URL + VERSION + query;
-    return this.http.put<T>(query,body).subscribe(res => {
-      //console.log(res);
-      },
-      err => {
-      console.log(err);
-      }
-      );
-  }
 
   //METODOS POST
 
@@ -119,5 +85,40 @@ export class InfoBancoService {
     return this.queryPut(query, body);
   }
 
+  //METODOS GENERICOS
 
+  private queryGet<T>(query: string){
+    query = URL + VERSION + query;
+    return this.http.get<T>(query);
+  }
+
+  private queryPost<T>(query: string, body: any){
+    query = URL + VERSION + query;
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+         });
+
+    let options = {
+      headers: httpHeaders
+         };
+    return this.http.post<T>(query,body,options).subscribe(res => {
+        //console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  private queryPut<T>(query: string, body: any){
+    query = URL + VERSION + query;
+    return this.http.put<T>(query,body).subscribe(res => {
+      //console.log(res);
+      },
+      err => {
+      console.log(err);
+      }
+      );
+  }
 }

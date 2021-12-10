@@ -1,11 +1,15 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 import { Account, Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { InfoBancoService } from '../../services/info-banco.service';
 import { AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer } from '../../interfaces/interfaces';
+import { AddNewFriendPage } from '../add-new-friend/add-new-friend.page';
 
 @Component({
   selector: 'app-transfer',
@@ -33,7 +37,8 @@ export class TransferPage implements OnInit {
   constructor( private userService: UserService,
                private router: Router,
                private infoService: InfoBancoService,
-               private toastCtrl: ToastController ) { }
+               private toastCtrl: ToastController,
+               private modalCtrl: ModalController ) { }
 
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
@@ -67,7 +72,7 @@ export class TransferPage implements OnInit {
     }
 
     this.userAccounts.forEach(element => {
-      if (element.idCuenta == this.debitAccount) {
+      if (element.idCuenta === this.debitAccount) {
         if (element.MontoActual >= this.amount) {
           this.flag_amount = true;
         }
@@ -90,6 +95,18 @@ export class TransferPage implements OnInit {
       this.presentToast('Invalid amount', 'danger');
     }
 
+
+    this.router.navigate(['/account-status']);
+  }
+
+  async addNewFriendAccount() {
+    const modal = await this.modalCtrl.create({
+      component: AddNewFriendPage,
+      componentProps: {
+        user: new User(),//obtenerUserPorId
+      }
+    });
+    await modal.present();
   }
 
   getId(){
@@ -107,13 +124,13 @@ export class TransferPage implements OnInit {
         cuentaOrigen : origenA,
         cuentaDestino : destinoA
       }
-    ]
+    ];
     //console.log(this.TransferNow[0]);
     this.infoService.postTransfer(this.TransferNow[0]);
   }
 
   postHistory(id: number){
-    let date = new Date();
+    const date = new Date();
     //console.log(date.toISOString());
     this.HistoryNow = [
       {
@@ -121,12 +138,12 @@ export class TransferPage implements OnInit {
         transferencia: id,
         descripcion: this.message
       }
-    ]
+    ];
     //console.log(this.HistoryNow[0]);
     this.infoService.postHistory(this.HistoryNow[0]);
   }
 
-  putAccount(op: string, acco : number){
+  putAccount(op: string, acco: number) {
     //suma o resta dependiendo de la cuenta
     if (op === 's') {
       this.userAccounts.forEach(element => {
@@ -147,7 +164,7 @@ export class TransferPage implements OnInit {
     this.amountNow = Number(this.amountNow.toFixed(2));
     this.AccountNow = [{
       MontoActual : this.amountNow
-    }]
+    }];
     //console.log(this.AccountNow[0]);
     this.infoService.putAccount(acco,this.AccountNow[0]);
   }
