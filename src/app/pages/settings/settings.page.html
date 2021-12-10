@@ -56,7 +56,7 @@
     <!-- Datos que solo modifica el admin -->
 
     <ng-container *ngIf="isAdmin">
-      <ion-item>
+      <ion-item *ngIf="source !== 'Menu'">
         <ion-label>Account is available: </ion-label>
         <ion-toggle name="availability" [(ngModel)]="isAvailable"></ion-toggle>
       </ion-item>
@@ -96,17 +96,16 @@
             </ion-col>
         </ion-row>
       </ion-grid>
-
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="addNewAccount()">
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-
     </ng-container>
 
     <ion-button [disabled]="form.invalid" type="submit" expand="block">
       {{ buttonText }}
     </ion-button>
  </form>
+
+ <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="addNewAccount()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 </ion-content>

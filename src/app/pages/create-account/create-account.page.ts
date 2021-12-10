@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/interfaces';
 
 @Component({
@@ -13,7 +13,8 @@ export class CreateAccountPage implements OnInit {
   @Input() user: User;
   initialAmount: number = null;
 
-  constructor( private modalCtrl: ModalController ) { }
+  constructor( private modalCtrl: ModalController,
+               private toastCtrl: ToastController ) { }
 
   ngOnInit() {
   }
@@ -26,8 +27,13 @@ export class CreateAccountPage implements OnInit {
 
   }
 
-  onSubmit( form: NgForm ) {
+  async onSubmit( form: NgForm ) {
     //crear cuenta para el user que nos envíen
+    if ( form.status === 'INVALID' ) {
+      await this.presentToast('Invalid Information, please try again', 'danger');
+    }
+
+    console.log(this.user);
     this.dismissModal();
   }
 
@@ -35,6 +41,15 @@ export class CreateAccountPage implements OnInit {
     if (event.keyCode === 13) {
       this.onSubmit( form );
     }
+  }
+
+  async presentToast( message: string, color: string ) {
+    const toast = await this.toastCtrl.create({
+      message,
+      color,
+      duration: 1500,
+    });
+    toast.present();
   }
 
 }

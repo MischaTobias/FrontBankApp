@@ -6,6 +6,7 @@ import { Account, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import { CreateAccountPage } from '../create-account/create-account.page';
+import { InfoBancoService } from 'src/app/services/info-banco.service';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,7 @@ export class SettingsPage implements OnInit {
   @Input() user: User;
   @Input() title: string;
   @Input() buttonText: string;
+  @Input() source: string;
   isAvailable = false;
   isAdmin = false;
 
@@ -38,7 +40,8 @@ export class SettingsPage implements OnInit {
   constructor( private userService: UserService,
                private router: Router,
                private toastCtrl: ToastController,
-               private modalCtrl: ModalController ) { }
+               private modalCtrl: ModalController,
+               private infoBancoService: InfoBancoService ) { }
 
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
@@ -51,11 +54,26 @@ export class SettingsPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  onSubmit( form: NgForm ) {
+  async onSubmit( form: NgForm ) {
     //modificar al usuario
-
     //si el usuario tiene idUsuario, modificar al usuario respectivo
     //si no tiene idUsuario, crear el usuario
+
+    if ( form.status === 'INVALID' ) {
+      await this.presentToast('Invalid Information, please try again', 'danger');
+    }
+
+    this.user.Disponible = this.isAvailable ? 1 : 0;
+
+    if (this.user.idUsuario) {
+      //Modificar usuario existente
+      this.infoBancoService.modifyUser( this.user );
+      this.dismissModal();
+      return;
+    }
+
+    //Crear un nuevo usuario
+    this.infoBancoService.createNewUser( this.user );
     this.dismissModal();
   }
 
