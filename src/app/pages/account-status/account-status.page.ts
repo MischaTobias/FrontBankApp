@@ -49,7 +49,11 @@ export class AccountStatusPage implements OnInit {
       if (!user) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
-      } else {
+      } else if(user.Disponible === 0){
+        this.presentToast('Account not available', 'danger');
+        this.router.navigate(['/login']);
+      }
+      else {
         this.infoService.getAccountStatus(user.Correo).subscribe(resp => {
           this.userAccounts.push(...resp);
         });

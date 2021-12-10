@@ -83,6 +83,9 @@ export class ManageUsersPage implements OnInit {
       } else if (user.Rol !== 'admin') {
         this.presentToast('You don\'t have the permission for that', 'danger');
         this.router.navigate(['/account-status']);
+      }else if(user.Disponible === 0){
+      this.presentToast('Account not available', 'danger');
+      this.router.navigate(['/login']);
       }
     });
   }

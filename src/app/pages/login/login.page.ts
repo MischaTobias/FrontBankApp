@@ -36,14 +36,14 @@ export class LoginPage implements OnInit {
       }
       else if (resp[0].password === this.user.Contrasena) {
         this.getInfoUser();
-        if (this.user.Disponible === 1) {
+        // if (this.user.Disponible === 1) {
           this.userService.setCurrentUser( this.user );
           this.presentToast('Succesful Login', 'success');
           this.router.navigate(['/account-status']);
-        }
-        if (this.user.Disponible === 0) {
-          this.presentToast('Account not available', 'danger');
-        }
+        // }
+        // if (this.user.Disponible === 0) {
+        //   this.presentToast('Account not available', 'danger');
+        // }
       }else{
         this.presentToast('Error in login', 'danger');
       }

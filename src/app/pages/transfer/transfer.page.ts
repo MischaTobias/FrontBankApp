@@ -188,6 +188,9 @@ export class TransferPage implements OnInit {
       if (!user) {
         this.presentToast('Please sign in', 'danger');
         this.router.navigate(['/login']);
+      }else if(user.Disponible === 0){
+        this.presentToast('Account not available', 'danger');
+        this.router.navigate(['/login']);
       }
     });
   }
