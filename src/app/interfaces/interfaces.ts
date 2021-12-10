@@ -33,7 +33,8 @@ export interface AccountPut{
 }
 
 export interface AccountFriend {
-  CuentaDestino: number;
+  CuentaDestino: number; 
+  Nombre: string
 }
 
 export class User {

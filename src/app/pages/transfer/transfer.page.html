@@ -34,7 +34,7 @@
                           (ionChange)="changeCreditAccount( $event )">
                   <ion-select-option *ngFor="let account of accountFriends"
                                       value="{{ account.CuentaDestino }}">
-                      {{ account.CuentaDestino }}
+                      {{ account.CuentaDestino }} - {{ account.Nombre }}
                   </ion-select-option>
               </ion-select>
             </ion-item>

@@ -20,7 +20,7 @@ export class TransferPage implements OnInit {
 
   userAccounts: Account[] = [];
   creditAccount: number = 0;
-  accountFriends: AccountFriend[] = [];
+  accountFriends: AccountFriend[] = []; 
   amount: number = null;
   flag_amount: boolean = false;
   message = '';
