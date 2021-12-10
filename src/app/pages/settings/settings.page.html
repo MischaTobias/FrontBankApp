@@ -97,7 +97,7 @@
         <ion-grid>
           <ion-row *ngFor="let account of userAccounts">
               <ion-col size="12">
-                  <ion-card (click)="addMoneyToAccount( account.idCuenta )">
+                  <ion-card (click)="addMoneyToAccount( account.idCuenta , account.MontoActual )">
                       <ion-card-header>
                           <ion-card-subtitle>Account no. {{ account.idCuenta }} - {{ account.TipoCuenta }}</ion-card-subtitle>
                           <ion-card-title>Current Balance: Q {{ account.MontoActual }}</ion-card-title>

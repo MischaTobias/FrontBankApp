@@ -36,9 +36,12 @@ export class LoginPage implements OnInit {
       }
       else if (resp[0].password === this.user.Contrasena) {
         this.getInfoUser();
-        this.userService.setCurrentUser( this.user );
-        this.presentToast('Succesful Login', 'success');
-        this.router.navigate(['/account-status']);
+        if (this.user.Disponible === 1) {
+          this.userService.setCurrentUser( this.user );
+          this.presentToast('Succesful Login', 'success');
+          this.router.navigate(['/account-status']);
+        }
+        this.presentToast('Account not available', 'danger');
       }else{
         this.presentToast('Error in login', 'danger');
       }

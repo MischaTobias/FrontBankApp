@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { User } from 'src/app/interfaces/interfaces';
+import { InfoBancoService } from '../../services/info-banco.service';
+import { AccountPut, Account } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-create-account',
@@ -16,9 +18,13 @@ export class CreateAccountPage implements OnInit {
   @Input() amountTitle: string;
   @Input() btnTitle: string;
   @Input() accountId: number = 0;
+  @Input() amountNow: number = 0;
   initialAmount: number = null;
+  AccountNow: AccountPut[] = [];
+  userAccounts: Account[] = [];
 
   constructor( private modalCtrl: ModalController,
+               private infoService: InfoBancoService,
                private toastCtrl: ToastController ) { }
 
   ngOnInit() {
@@ -45,9 +51,21 @@ export class CreateAccountPage implements OnInit {
     }
 
     //depositar a cuenta
-    console.log(this.user);
-    console.log(this.accountId);
+    this.putAccount(this.accountId);
     this.dismissModal();
+    window.location.reload();
+  }
+
+  putAccount(acco: number) {
+    //suma a la cuenta
+    this.initialAmount = this.amountNow + this.initialAmount;
+    //arreglo formato para 2 decimales
+    this.initialAmount = Number(this.initialAmount.toFixed(2));
+    this.AccountNow = [{
+      MontoActual : this.initialAmount
+    }];
+    //console.log(this.AccountNow[0]);
+    this.infoService.putAccount(acco,this.AccountNow[0]);
   }
 
   keyDownFunction( event, form ) {

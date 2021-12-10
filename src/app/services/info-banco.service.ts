@@ -54,6 +54,11 @@ export class InfoBancoService {
     return this.queryGet<User[]>(query);
   }
 
+  getUserInfo2(name: string){
+    const query = `/usuarioInfo2/${name}`;
+    return this.queryGet<User[]>(query);
+  }
+
   getAccountsFriends(account: number){
     const query = `/relacionCuenta/${account}`;
     return this.queryGet<AccountFriend[]>(query);

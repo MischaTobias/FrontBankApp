@@ -49,13 +49,14 @@ export class SettingsPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  async addMoneyToAccount( accountId: number ) {
+  async addMoneyToAccount( accountId: number , amountNow: number) {
     const modal = await this.modalCtrl.create({
       component: CreateAccountPage,
       componentProps: {
         user: new User(),//obtenerUserPorId
         title: `Deposit to ${ accountId }`,
         accountId,
+        amountNow,
         amountTitle: 'Amount to deposit',
         btnTitle: 'Deposit'
       }

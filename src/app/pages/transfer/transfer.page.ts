@@ -26,6 +26,7 @@ export class TransferPage implements OnInit {
   message = '';
   credit: number = null;
   debitAccount: number = 0;
+  user: User = new User();
 
   //arrays post
   amountNow: number = 0.00;
@@ -62,7 +63,16 @@ export class TransferPage implements OnInit {
   }
 
   changeCreditAccount( event ) {
-    this.creditAccount = event.detail.value;
+    // this.infoService.getUserInfo2(this.user.Nombre).subscribe(resp => {
+    //   this.user = resp[0];
+    //   this.userService.setCurrentUser(this.user);
+    // });
+    // if (this.user.Disponible === 0) {
+    //   this.presentToast('Account not available', 'danger');
+    //   return;
+    // }else{
+      this.creditAccount = event.detail.value;
+    // }
   }
 
   onSubmit( form: NgForm ) {
@@ -94,8 +104,6 @@ export class TransferPage implements OnInit {
     }else{
       this.presentToast('Invalid amount', 'danger');
     }
-
-
     this.router.navigate(['/account-status']);
   }
 

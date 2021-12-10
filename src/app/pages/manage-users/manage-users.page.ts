@@ -37,7 +37,7 @@ export class ManageUsersPage implements OnInit {
       componentProps: {
         user: this.appUsers[userId - 1],//obtenerUserPorId
         title: 'Modify user',
-        buttonText: 'Save changes'
+        buttonText: 'Save changes' 
       }
     });
     await modal.present();
