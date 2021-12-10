@@ -8,7 +8,7 @@ import { ToastController, ModalController } from '@ionic/angular';
 import { Account, Transfer, User } from 'src/app/interfaces/interfaces';
 import { UserService } from '../../services/user.service';
 import { InfoBancoService } from '../../services/info-banco.service';
-import { AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer } from '../../interfaces/interfaces';
+import { AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, DisponibleAcc } from '../../interfaces/interfaces';
 import { AddNewFriendPage } from '../add-new-friend/add-new-friend.page';
 
 @Component({
@@ -23,10 +23,12 @@ export class TransferPage implements OnInit {
   accountFriends: AccountFriend[] = []; 
   amount: number = null;
   flag_amount: boolean = false;
+  flag_disponible: boolean = false;
   message = '';
   credit: number = null;
   debitAccount: number = 0;
   user: User = new User();
+  ArrayDisAcc: DisponibleAcc[] = [];
 
   //arrays post
   amountNow: number = 0.00;
@@ -51,6 +53,10 @@ export class TransferPage implements OnInit {
       }
     });
     this.getId();
+    this.infoService.getAccountAvailable().subscribe(resp => {
+      this.ArrayDisAcc.push(...resp);
+      //console.log(resp);
+    });
   }
 
   changeDebitAccount( event ) {
@@ -63,16 +69,7 @@ export class TransferPage implements OnInit {
   }
 
   changeCreditAccount( event ) {
-    // this.infoService.getUserInfo2(this.user.Nombre).subscribe(resp => {
-    //   this.user = resp[0];
-    //   this.userService.setCurrentUser(this.user);
-    // });
-    // if (this.user.Disponible === 0) {
-    //   this.presentToast('Account not available', 'danger');
-    //   return;
-    // }else{
       this.creditAccount = event.detail.value;
-    // }
   }
 
   onSubmit( form: NgForm ) {
@@ -88,6 +85,21 @@ export class TransferPage implements OnInit {
         }
       }
     });
+
+    this.ArrayDisAcc.forEach(element => {
+      if (element.idCuenta == this.creditAccount) {
+        if (element.Disponible == 0) {
+          this.flag_disponible = true;
+        }
+      }
+    });
+
+    if ( this.flag_disponible === true) {
+      this.presentToast('Account not available', 'danger');
+      this.router.navigate(['/account-status']);
+      this.flag_disponible = false;
+      return;
+    }
 
     if (this.flag_amount) {
       this.flag_amount = false;

@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, Relationships, HistoryB } from '../interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, Relationships, HistoryB, DisponibleAcc } from '../interfaces/interfaces';
 import { User, AccountSearchFriend } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
@@ -77,6 +77,11 @@ export class InfoBancoService {
   getIdUser(){
     const query = `/usuarioId`;
     return this.queryGet<IdTransfer>(query);
+  }
+
+  getAccountAvailable(){
+    const query = `/cuentaDisponible`;
+    return this.queryGet<DisponibleAcc[]>(query);
   }
 
   //METODOS POST

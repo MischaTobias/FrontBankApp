@@ -103,3 +103,8 @@ export interface HistoryB {
 export interface IdTransfer {
   idTransferencias: number;
 }
+
+export interface DisponibleAcc {
+  Disponible: number;
+  idCuenta: number;
+}
