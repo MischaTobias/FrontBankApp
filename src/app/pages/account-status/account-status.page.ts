@@ -35,10 +35,12 @@ export class AccountStatusPage implements OnInit {
 
   checkHistory( account ) {
     console.log(account);
+    this.router.navigate(['/history']);
   }
 
   transfer( account: Account ) {
     console.log(account);
+    this.router.navigate(['/transfer']);
   }
 
   ionViewWillEnter() {

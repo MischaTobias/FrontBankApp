@@ -7,7 +7,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title>Create new savings account</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
   <form #form="ngForm" (ngSubmit)="onSubmit( form )" (keydown)="keyDownFunction( $event, form )">
 
     <ion-item>
-      <ion-label>Initial amount:</ion-label>
+      <ion-label>{{ amountTitle }}:</ion-label>
       <ion-input type="number"
                  placeholder="0.0"
                  slot="end"
@@ -25,7 +25,7 @@
     </ion-item>
 
     <ion-button [disabled]="form.invalid" type="submit" expand="block">
-      Create account
+      {{ btnTitle }}
     </ion-button>
  </form>
 </ion-content>

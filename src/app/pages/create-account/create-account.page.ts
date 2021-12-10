@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
@@ -11,6 +12,10 @@ import { User } from 'src/app/interfaces/interfaces';
 export class CreateAccountPage implements OnInit {
 
   @Input() user: User;
+  @Input() title: string;
+  @Input() amountTitle: string;
+  @Input() btnTitle: string;
+  @Input() accountId: number = 0;
   initialAmount: number = null;
 
   constructor( private modalCtrl: ModalController,
@@ -23,17 +28,25 @@ export class CreateAccountPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  changeAccountType( event ) {
-
-  }
-
   async onSubmit( form: NgForm ) {
     //crear cuenta para el user que nos envíen
     if ( form.status === 'INVALID' ) {
       await this.presentToast('Invalid Information, please try again', 'danger');
     }
 
+    console.log(this.initialAmount);
+    console.log(this.accountId);
+
+    if (this.accountId === 0) {
+      //crear cuenta
+      console.log(this.user);
+      this.dismissModal();
+      return;
+    }
+
+    //depositar a cuenta
     console.log(this.user);
+    console.log(this.accountId);
     this.dismissModal();
   }
 

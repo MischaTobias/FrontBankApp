@@ -56,7 +56,7 @@
     <!-- Datos que solo modifica el admin -->
 
     <ng-container *ngIf="isAdmin">
-      <ion-item *ngIf="source !== 'Menu'">
+      <ion-item *ngIf="source !== 'Menu' && source !== 'CreateNewUser'">
         <ion-label>Account is available: </ion-label>
         <ion-toggle name="availability" [(ngModel)]="isAvailable"></ion-toggle>
       </ion-item>
@@ -79,23 +79,25 @@
                    [(ngModel)]="user.DPI"
                    required></ion-input>
       </ion-item>
-  
-      <ion-list-header *ngIf="userAccounts.length !== 0">
-        <ion-title>User accounts</ion-title>
-      </ion-list-header>
 
-      <ion-grid>
-        <ion-row *ngFor="let account of userAccounts">
-            <ion-col size="12">
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-subtitle>Account no. {{ account.idCuenta }} - {{ account.TipoCuenta }}</ion-card-subtitle>
-                        <ion-card-title>Current Balance: Q {{ account.MontoActual }}</ion-card-title>
-                    </ion-card-header>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ng-container *ngIf="source !== 'CreateNewUser'">
+        <ion-list-header *ngIf="userAccounts.length !== 0">
+          <ion-title>User accounts</ion-title>
+        </ion-list-header>
+  
+        <ion-grid>
+          <ion-row *ngFor="let account of userAccounts">
+              <ion-col size="12">
+                  <ion-card (click)="addMoneyToAccount( account.idCuenta )">
+                      <ion-card-header>
+                          <ion-card-subtitle>Account no. {{ account.idCuenta }} - {{ account.TipoCuenta }}</ion-card-subtitle>
+                          <ion-card-title>Current Balance: Q {{ account.MontoActual }}</ion-card-title>
+                      </ion-card-header>
+                  </ion-card>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
     </ng-container>
 
     <ion-button [disabled]="form.invalid" type="submit" expand="block">
@@ -103,7 +105,7 @@
     </ion-button>
  </form>
 
- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+ <ion-fab *ngIf="source !== 'CreateNewUser' && isAdmin" vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button (click)="addNewAccount()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>

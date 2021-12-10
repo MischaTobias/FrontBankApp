@@ -25,9 +25,9 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.checkUser();
-    this.componentes = this.dataService.getMenuOpts();
     this.checkRouter();
+    this.checkUser();
+    this.componentes = this.dataService.getMenuOpts();
   }
 
   async openUserSettings(){
@@ -43,6 +43,10 @@ export class AppComponent implements OnInit {
     await modal.present();
   }
 
+  menuOpened() {
+    this.checkUser();
+  }
+
   checkRouter() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -51,7 +55,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  async checkUser() {
+  checkUser() {
     this.userService.getCurrentUser().then(user => {
       if (user) {
         this.currentUser = user;

@@ -54,6 +54,20 @@ export class SettingsPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  async addMoneyToAccount( accountId: number ) {
+    const modal = await this.modalCtrl.create({
+      component: CreateAccountPage,
+      componentProps: {
+        user: new User(),//obtenerUserPorId
+        title: `Deposit to ${ accountId }`,
+        accountId,
+        amountTitle: 'Amount to deposit',
+        btnTitle: 'Deposit'
+      }
+    });
+    await modal.present();
+  }
+
   async onSubmit( form: NgForm ) {
     //modificar al usuario
     //si el usuario tiene idUsuario, modificar al usuario respectivo
@@ -82,6 +96,9 @@ export class SettingsPage implements OnInit {
       component: CreateAccountPage,
       componentProps: {
         user: new User(),//obtenerUserPorId
+        title: 'Create new savings account',
+        amountTitle: 'Initial amount',
+        btnTitle: 'Create account'
       }
     });
     await modal.present();
