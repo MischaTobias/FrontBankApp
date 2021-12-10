@@ -1,9 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable prefer-const */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer } from '../interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, friendAccount } from '../interfaces/interfaces';
 import { User } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
@@ -56,6 +57,12 @@ export class InfoBancoService {
   getIdTransfer(){
     const query = `/tranferencia`;
     return this.queryGet<IdTransfer>(query);
+  }
+
+  getAccounts( account: string ) {
+    const query = `/${ account }`;
+    //obtener el objeto con {id.cuenta, u.nombre}
+    return [] as friendAccount[];
   }
 
   createNewUser( user: User ) {

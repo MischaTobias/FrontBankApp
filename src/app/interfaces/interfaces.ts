@@ -92,3 +92,8 @@ export interface HistoryA {
 export interface IdTransfer {
   idTransferencias: number;
 }
+
+export interface friendAccount {
+  accountId: string;
+  owner: string;
+}
