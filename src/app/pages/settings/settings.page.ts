@@ -112,6 +112,7 @@ export class SettingsPage implements OnInit {
     this.postFriendAccount(this.accountAho,this.accountMon);
     this.postHistoryUser("Relacion Cuenta","Se relaciono cuenta " + this.accountAho + " " + this.accountMon);
     this.dismissModal();
+    window.location.reload();
   }
 
   createAccRandom(){
@@ -125,7 +126,6 @@ export class SettingsPage implements OnInit {
   getId(){
     this.infoBancoService.getIdUser().subscribe(resp => {
       this.idUser = resp[0].idUsuario;
-      console.log(this.idUser);
     });
   }
 
@@ -138,7 +138,7 @@ export class SettingsPage implements OnInit {
         descripcion: description
       }
     ];
-    console.log(this.HistoryNow[0]);
+    //console.log(this.HistoryNow[0]);
     this.infoBancoService.postHistoryUser(this.HistoryNow[0]);
   }
 
@@ -151,7 +151,7 @@ export class SettingsPage implements OnInit {
         Propietario : owner
       }
     ];
-    console.log(this.AccNow[0]);
+    //console.log(this.AccNow[0]);
     this.infoBancoService.postCreateAccount(this.AccNow[0]);
   }
 
@@ -162,7 +162,7 @@ export class SettingsPage implements OnInit {
         cuentaDestino : destinoA
       }
     ];
-    console.log(this.AccFriendNow[0]);
+    //console.log(this.AccFriendNow[0]);
     this.infoBancoService.postAccountsFriends(this.AccFriendNow[0]);
   }
   

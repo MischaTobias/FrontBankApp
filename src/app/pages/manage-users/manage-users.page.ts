@@ -57,6 +57,11 @@ export class ManageUsersPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.infoService.getUsers().subscribe(resp => {
+      if (this.appUsers.length === 0) {
+        this.appUsers.push(...resp);
+      }
+    });
     this.userService.getCurrentUser().then((user: User) => {
       if (!user) {
         this.presentToast('Please sign in', 'danger');

@@ -93,7 +93,6 @@ export class InfoBancoService {
 
   postNewUser(body: User){
     const query = `/usuario`;
-    console.log(body);
     return this.queryPost(query, body);
   }
 
