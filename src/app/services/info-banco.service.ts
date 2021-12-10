@@ -106,7 +106,7 @@ export class InfoBancoService {
         //console.log(res);
       },
       err => {
-        console.log(err);
+        //console.log(err);
       }
     );
   }
@@ -117,7 +117,7 @@ export class InfoBancoService {
       //console.log(res);
       },
       err => {
-      console.log(err);
+      //console.log(err);
       }
       );
   }

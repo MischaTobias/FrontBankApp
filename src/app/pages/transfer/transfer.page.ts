@@ -72,7 +72,7 @@ export class TransferPage implements OnInit {
     }
 
     this.userAccounts.forEach(element => {
-      if (element.idCuenta === this.debitAccount) {
+      if (element.idCuenta == this.debitAccount) {
         if (element.MontoActual >= this.amount) {
           this.flag_amount = true;
         }
