@@ -29,6 +29,7 @@ export class SettingsPage implements OnInit {
   accountAho: number = 0;
   AccFriendNow: Relationships[] = [];
   userAccounts: Account[] = [];
+  userNow: User = new User();
 
   constructor( private userService: UserService,
                private router: Router,
@@ -77,7 +78,16 @@ export class SettingsPage implements OnInit {
 
     if (this.user.idUsuario) {
       //Modificar usuario existente
-      //this.infoBancoService.modifyUser( this.user );
+      this.userNow = {
+        Correo : this.user.Correo,
+        Disponible : this.user.Disponible,
+        Direccion : this.user.Direccion,
+        DPI : this.user.DPI,
+        FechaNacimiento : this.user.FechaNacimiento,
+        Nombre : this.user.Nombre,
+        Telefono : this.user.Telefono
+      }
+      this.infoBancoService.putUser( this.user.Correo , this.userNow );
       this.dismissModal();
       return;
     }

@@ -118,6 +118,11 @@ export class InfoBancoService {
     return this.queryPut(query, body);
   }
 
+  putUser(email: string, body: User){
+    const query = `/usuario/${email}`;
+    return this.queryPut(query, body);
+  }
+
   //METODOS GENERICOS
 
   private queryGet<T>(query: string){

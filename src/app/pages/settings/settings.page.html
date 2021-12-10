@@ -28,14 +28,6 @@
     </ion-item>
     
     <ion-item>
-      <ion-label>Password:</ion-label>
-      <ion-input type="password"
-                 [placeholder]="user.Contrasena"
-                 name="password"
-                 [(ngModel)]="user.Contrasena"></ion-input>
-    </ion-item>
-
-    <ion-item>
       <ion-label>Address:</ion-label>
       <ion-input type="text"
                  [placeholder]="user.Direccion"
@@ -68,16 +60,6 @@
       <ion-item *ngIf="source !== 'Menu' && source !== 'CreateNewUser'">
         <ion-label>Account is available: </ion-label>
         <ion-toggle name="availability" [(ngModel)]="isAvailable"></ion-toggle>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label>Email:</ion-label>
-        <ion-input type="email"
-                   [placeholder]="user.Correo"
-                   name="email"
-                   [(ngModel)]="user.Correo"
-                   pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-                   required></ion-input>
       </ion-item>
       
       <ion-item>

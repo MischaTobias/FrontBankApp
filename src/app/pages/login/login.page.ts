@@ -41,7 +41,9 @@ export class LoginPage implements OnInit {
           this.presentToast('Succesful Login', 'success');
           this.router.navigate(['/account-status']);
         }
-        this.presentToast('Account not available', 'danger');
+        if (this.user.Disponible === 0) {
+          this.presentToast('Account not available', 'danger');
+        }
       }else{
         this.presentToast('Error in login', 'danger');
       }
