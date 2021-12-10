@@ -94,6 +94,12 @@ export interface HistoryA {
   descripcion: string;
 }
 
+export interface HistoryB {
+  tipoTransaccion: string;
+  fechaYHora: string;
+  descripcion: string;
+}
+
 export interface IdTransfer {
   idTransferencias: number;
 }

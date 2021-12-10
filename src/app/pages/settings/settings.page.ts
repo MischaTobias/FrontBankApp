@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { NgForm } from '@angular/forms';
 import { CreateAccountPage } from '../create-account/create-account.page';
 import { InfoBancoService } from 'src/app/services/info-banco.service';
+import { HistoryB, Relationships } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-settings',
@@ -21,7 +22,12 @@ export class SettingsPage implements OnInit {
   @Input() source: string;
   isAvailable = false;
   isAdmin = false;
-
+  HistoryNow: HistoryB[] = [];
+  AccNow: Account[] = [];
+  idUser: number = 0;
+  accountMon: number = 0;
+  accountAho: number = 0;
+  AccFriendNow: Relationships[] = [];
   userAccounts: Account[] = [
     {
       idCuenta: 1,
@@ -48,6 +54,8 @@ export class SettingsPage implements OnInit {
       this.isAvailable = user.Disponible === 1;
       this.isAdmin = user.Rol === 'admin';
     });
+    //obtener id del usuario
+    this.getId();
   }
 
   dismissModal() {
@@ -81,16 +89,83 @@ export class SettingsPage implements OnInit {
 
     if (this.user.idUsuario) {
       //Modificar usuario existente
-      this.infoBancoService.modifyUser( this.user );
+      //this.infoBancoService.modifyUser( this.user );
       this.dismissModal();
       return;
     }
-
+    //datos predeterminados para creacion de usuario
+    this.user.Rol = "Normal";
+    this.user.Disponible = 1;
+    this.createAccRandom();
+    this.createAccRandom2();
     //Crear un nuevo usuario
-    this.infoBancoService.createNewUser( this.user );
+    this.infoBancoService.postNewUser( this.user );
+    //Guardar historial la creacion
+    this.postHistoryUser("Crea Usuario","Se creo el usuario " + this.user.Nombre);
+    //crear cuenta monetaria
+    this.postCreateAccount("monetaria",1000,this.accountMon,this.idUser+1);
+    //crear cuenta ahorro
+    this.postCreateAccount("ahorro",0,this.accountAho,this.idUser+1);
+    //crear relacion cuentas
+    this.postFriendAccount(this.accountMon,this.accountAho);
+    this.postHistoryUser("Relacion Cuenta","Se relaciono cuenta " + this.accountMon + " " + this.accountAho);
+    this.postFriendAccount(this.accountAho,this.accountMon);
+    this.postHistoryUser("Relacion Cuenta","Se relaciono cuenta " + this.accountAho + " " + this.accountMon);
     this.dismissModal();
   }
 
+  createAccRandom(){
+    this.accountAho = Math.floor(10000000 + Math.random() * 90000000);
+  }
+
+  createAccRandom2(){
+    this.accountMon = Math.floor(10000000 + Math.random() * 90000000);
+  }
+
+  getId(){
+    this.infoBancoService.getIdUser().subscribe(resp => {
+      this.idUser = resp[0].idUsuario;
+      console.log(this.idUser);
+    });
+  }
+
+  postHistoryUser(type: string,description: string){
+    const date = new Date();
+    this.HistoryNow = [
+      {
+        tipoTransaccion: type,
+        fechaYHora: date.toISOString(),
+        descripcion: description
+      }
+    ];
+    console.log(this.HistoryNow[0]);
+    this.infoBancoService.postHistoryUser(this.HistoryNow[0]);
+  }
+
+  postCreateAccount(type: string, amount: number, id: number, owner: number){
+    this.AccNow = [
+      {
+        idCuenta : id,
+        TipoCuenta : type,
+        MontoActual : amount,
+        Propietario : owner
+      }
+    ];
+    console.log(this.AccNow[0]);
+    this.infoBancoService.postCreateAccount(this.AccNow[0]);
+  }
+
+  postFriendAccount(origenA: number, destinoA: number){
+    this.AccFriendNow = [
+      {
+        cuentaOrigen : origenA,
+        cuentaDestino : destinoA
+      }
+    ];
+    console.log(this.AccFriendNow[0]);
+    this.infoBancoService.postAccountsFriends(this.AccFriendNow[0]);
+  }
+  
   async addNewAccount() {
     const modal = await this.modalCtrl.create({
       component: CreateAccountPage,

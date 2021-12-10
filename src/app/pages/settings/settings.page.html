@@ -45,6 +45,15 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Birthday Date:</ion-label>
+      <ion-input type="date"
+                 [placeholder]="user.FechaNacimiento"
+                 name="address"
+                 [(ngModel)]="user.FechaNacimiento"
+                 required></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-label>Phone:</ion-label>
       <ion-input type="text"
                  [placeholder]="user.Telefono"

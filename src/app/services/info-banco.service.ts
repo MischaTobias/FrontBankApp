@@ -4,7 +4,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, Relationships } from '../interfaces/interfaces';
+import { Account, HistoryAdmin, HistoryNormal, AccountFriend, TransferA, AccountPut, HistoryA, IdTransfer, Relationships, HistoryB } from '../interfaces/interfaces';
 import { User, AccountSearchFriend } from 'src/app/interfaces/interfaces';
 
 const URL = environment.url;
@@ -69,12 +69,9 @@ export class InfoBancoService {
     return this.queryGet<IdTransfer>(query);
   }
 
-  createNewUser( user: User ) {
-    console.log( user );
-  }
-
-  modifyUser( user: User ) {
-    console.log( user );
+  getIdUser(){
+    const query = `/usuarioId`;
+    return this.queryGet<IdTransfer>(query);
   }
 
   //METODOS POST
@@ -91,6 +88,22 @@ export class InfoBancoService {
 
   postAccountsFriends( body: Relationships ) {
     const query = `/relacionCuenta`;
+    return this.queryPost(query, body);
+  }
+
+  postNewUser(body: User){
+    const query = `/usuario`;
+    console.log(body);
+    return this.queryPost(query, body);
+  }
+
+  postHistoryUser(body: HistoryB){
+    const query = `/historial`;
+    return this.queryPost(query, body);
+  }
+
+  postCreateAccount( body: Account ) {
+    const query = `/cuenta`;
     return this.queryPost(query, body);
   }
 
