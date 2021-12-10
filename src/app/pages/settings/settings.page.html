@@ -31,6 +31,7 @@
       <ion-label>Password:</ion-label>
       <ion-input type="password"
                  [placeholder]="user.Contrasena"
+                 [readonly]="read"
                  name="password"
                  [(ngModel)]="user.Contrasena"></ion-input>
     </ion-item>
@@ -75,11 +76,12 @@
         <ion-input type="email"
                    [placeholder]="user.Correo"
                    name="email"
+                   [readonly]="read"
                    [(ngModel)]="user.Correo"
                    pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
                    required></ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label>DPI:</ion-label>
         <ion-input type="text"

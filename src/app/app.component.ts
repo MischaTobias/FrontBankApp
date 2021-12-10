@@ -37,7 +37,8 @@ export class AppComponent implements OnInit {
         user: this.currentUser,
         title: 'Modify user',
         buttonText: 'Save changes',
-        source: 'Menu'
+        source: 'Menu',
+        read: true
       }
     });
     await modal.present();

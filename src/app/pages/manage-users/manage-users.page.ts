@@ -39,7 +39,8 @@ export class ManageUsersPage implements OnInit {
       componentProps: {
         user: this.userGo,
         title: 'Modify user',
-        buttonText: 'Save changes'  
+        buttonText: 'Save changes',
+        read: true  
       }
     });
     await modal.present();
@@ -61,7 +62,8 @@ export class ManageUsersPage implements OnInit {
         user: new User(),//obtenerUserPorId
         title: 'Create new user',
         buttonText: 'Create user',
-        source: 'CreateNewUser'
+        source: 'CreateNewUser',
+        read: false
       }
     });
     await modal.present();

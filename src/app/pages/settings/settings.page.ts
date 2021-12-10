@@ -20,6 +20,7 @@ export class SettingsPage implements OnInit {
   @Input() title: string;
   @Input() buttonText: string;
   @Input() source: string;
+  @Input() read: boolean;
   isAvailable = false;
   isAdmin = false;
   HistoryNow: HistoryB[] = [];
