@@ -51,9 +51,31 @@ export class InfoBancoService {
     return this.queryGet<AccountFriend[]>(query);
   }
 
-  getIdTransfer(){
+  createNewUser( user: User ) {
+    console.log( user );
+  }
+
+  modifyUser( user: User ) {
+    console.log( user );
+  }
+
+  //METODOS POST
+
+  postTransfer(body: TransferA){
     const query = `/tranferencia`;
-    return this.queryGet<IdTransfer>(query);
+    return this.queryPost(query, body);
+  }
+
+  postHistory(body: HistoryA){
+    const query = `/historial2`;
+    return this.queryPost(query, body);
+  }
+
+  //METODOS PUT
+
+  putAccount(account: number, body: AccountPut){
+    const query = `/cuenta/${account}`;
+    return this.queryPut(query, body);
   }
 
   //METODOS GENERICOS
@@ -65,51 +87,14 @@ export class InfoBancoService {
 
   private queryPost<T>(query: string, body: any){
     query = URL + VERSION + query;
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Cache-Control': 'no-cache'
-         });    
-    let options = {
-      headers: httpHeaders
-         };
-    return this.http.post<T>(query,body,options).subscribe(res => { 
-        console.log(res);	
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    return this.http.post<T>(query,body);
   }
 
   private queryPut<T>(query: string, body: any){
     query = URL + VERSION + query;
-    return this.http.put<T>(query,body).subscribe(res => {
-      console.log(res);
-      },
-      err => {
-      console.log(err);
-      }
-      );
+    return this.http.put<T>(query,body);
   }
 
-  //METODOS POST
-
-  postTransfer(body: TransferA){
-    const query = `/tranferencia`;
-    return this.queryPost(query,body);
-  }
-
-  postHistory(body: HistoryA){
-    const query = `/historial2`;
-    return this.queryPost(query,body);
-  }
-
-  //METODOS PUT
-
-  putAccount(account: number, body: AccountPut){
-    const query = `/cuenta/${account}`;
-    return this.queryPut(query,body);
-  }
 
 
 }
