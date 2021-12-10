@@ -29,7 +29,9 @@ export class SettingsPage implements OnInit {
   accountAho: number = 0;
   AccFriendNow: Relationships[] = [];
   userAccounts: Account[] = [];
+  userAccounts2: Account[] = [];
   userNow: User = new User();
+  changeAva = false;
 
   constructor( private userService: UserService,
                private router: Router,
@@ -40,10 +42,15 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
     this.userService.getCurrentUser().then((user: User) => {
       this.isAvailable = user.Disponible === 1;
+      this.changeAva = user.Disponible === 1;
       this.isAdmin = user.Rol === 'admin';
     });
     //obtener id del usuario
     this.getId();
+    //ir a traer la lista de cuentas de la persona
+    this.infoBancoService.getAccountStatus(this.user.Correo).subscribe(resp => {
+      this.userAccounts.push(...resp);
+    });
   }
 
   dismissModal() {
@@ -88,7 +95,18 @@ export class SettingsPage implements OnInit {
         Telefono : this.user.Telefono
       }
       this.infoBancoService.putUser( this.user.Correo , this.userNow );
+      //guardar en historial si deshabilito/habilito cuenta
+      console.log(this.changeAva);
+      console.log(this.isAvailable);
+      if (this.changeAva === this.isAvailable && this.isAvailable) {
+        console.log('habilitado');
+        this.postHistoryUser("Habilita Usuario","Se habilito el usuario " + this.userNow.Nombre);
+      }else if (this.changeAva !== this.isAvailable && !this.isAvailable){
+        console.log('deshabilitado');
+        this.postHistoryUser("Deshabilita Usuario","Se deshabilito el usuario " + this.userNow.Nombre);
+      }
       this.dismissModal();
+      window.location.reload();
       return;
     }
     //datos predeterminados para creacion de usuario
@@ -194,9 +212,9 @@ export class SettingsPage implements OnInit {
       this.isAdmin = user.Rol === 'admin';
 
       //ir a traer la lista de cuentas de la persona
-      this.infoBancoService.getAccountStatus(user.Correo).subscribe(resp => {
-        this.userAccounts.push(...resp);
-      });
+      // this.infoBancoService.getAccountStatus(user.Correo).subscribe(resp => {
+      //   this.userAccounts.push(...resp);
+      // });
     });
   }
 

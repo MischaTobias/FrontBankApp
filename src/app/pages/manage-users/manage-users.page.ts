@@ -15,6 +15,7 @@ import { InfoBancoService } from '../../services/info-banco.service';
 export class ManageUsersPage implements OnInit {
 
   appUsers: User[] = [];
+  userGo: User = new User();
 
   constructor( private userService: UserService,
                private router: Router,
@@ -31,16 +32,26 @@ export class ManageUsersPage implements OnInit {
   }
 
   async modifyAccount( userId: number ) {
+    this.SearchUser(userId);
     //enviar el id para la página de modificación
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
       componentProps: {
-        user: this.appUsers[userId - 1],//obtenerUserPorId
+        user: this.userGo,
         title: 'Modify user',
-        buttonText: 'Save changes' 
+        buttonText: 'Save changes'  
       }
     });
     await modal.present();
+  }
+
+  SearchUser(userId: number ){
+    this.appUsers.forEach(element => {
+      if (element.idUsuario == userId) {
+        this.userGo = element;
+        return;
+      }
+    });
   }
 
   async addNewUser() {
