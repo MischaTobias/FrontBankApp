@@ -158,10 +158,10 @@ export class SettingsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: CreateAccountPage,
       componentProps: {
-        user: new User(),//obtenerUserPorId
+        user: this.user.idUsuario,//obtenerUserPorId
         title: 'Create new savings account',
         amountTitle: 'Initial amount',
-        btnTitle: 'Create account'
+        btnTitle: 'Create account' 
       }
     });
     await modal.present();

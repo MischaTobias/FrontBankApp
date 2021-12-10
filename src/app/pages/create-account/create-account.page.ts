@@ -13,7 +13,7 @@ import { AccountPut, Account } from '../../interfaces/interfaces';
 })
 export class CreateAccountPage implements OnInit {
 
-  @Input() user: User;
+  @Input() user: number;
   @Input() title: string;
   @Input() amountTitle: string;
   @Input() btnTitle: string;
@@ -22,6 +22,8 @@ export class CreateAccountPage implements OnInit {
   initialAmount: number = null;
   AccountNow: AccountPut[] = [];
   userAccounts: Account[] = [];
+  AccNow: Account[] = [];
+  accountAho: number = 0;
 
   constructor( private modalCtrl: ModalController,
                private infoService: InfoBancoService,
@@ -40,13 +42,12 @@ export class CreateAccountPage implements OnInit {
       await this.presentToast('Invalid Information, please try again', 'danger');
     }
 
-    console.log(this.initialAmount);
-    console.log(this.accountId);
-
     if (this.accountId === 0) {
       //crear cuenta
-      console.log(this.user);
+      this.accountAho = Math.floor(10000000 + Math.random() * 90000000);
+      this.postCreateAccount("ahorro",this.initialAmount,this.accountAho,this.user);
       this.dismissModal();
+      window.location.reload();
       return;
     }
 
@@ -54,6 +55,19 @@ export class CreateAccountPage implements OnInit {
     this.putAccount(this.accountId);
     this.dismissModal();
     window.location.reload();
+  }
+
+  postCreateAccount(type: string, amount: number, id: number, owner: number){
+    this.AccNow = [
+      {
+        idCuenta : id,
+        TipoCuenta : type,
+        MontoActual : amount,
+        Propietario : owner
+      }
+    ];
+    //console.log(this.AccNow[0]);
+    this.infoService.postCreateAccount(this.AccNow[0]);
   }
 
   putAccount(acco: number) {
